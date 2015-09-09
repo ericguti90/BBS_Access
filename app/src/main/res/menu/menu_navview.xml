@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_seccion_1"
+            android:icon="@drawable/ic_menu"
+            android:title="@string/seccion_1"/>
+        <item
+            android:id="@+id/menu_seccion_2"
+            android:icon="@drawable/ic_menu"
+            android:title="@string/seccion_2"/>
+        <item
+            android:id="@+id/menu_seccion_3"
+            android:icon="@drawable/ic_menu"
+            android:title="@string/seccion_3"/>
+    </group>
+    <item
+        android:id="@+id/navigation_subheader"
+        android:title="@string/otras_opciones">
+        <menu>
+            <item
+                android:id="@+id/menu_opcion_1"
+                android:icon="@drawable/ic_menu"
+                android:title="@string/opcion_1"/>
+            <item
+                android:id="@+id/menu_opcion_2"
+                android:icon="@drawable/ic_menu"
+                android:title="@string/opcion_2"/>
+        </menu>
+    </item>-->
+    <item
+        android:id="@+id/app_version"
+        android:title="COFB v1.0">
+        <menu>
+            <item
+                android:id="@+id/avis_legal"
+                android:icon="@drawable/ic_menu"
+                android:title="Avís legal" />
+            <item
+                android:id="@+id/bustia"
+                android:icon="@drawable/ic_menu"
+                android:title="Bústia de suggeriments"/>
+            <item
+                android:id="@+id/contacte"
+                android:icon="@drawable/ic_menu"
+                android:title="Contacte"/>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/configuracio"
+        android:title="Configuració">
+        <menu>
+            <item
+                android:id="@+id/idioma"
+                android:icon="@drawable/ic_menu"
+                android:title="Canviar idioma"/>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/aplicacio"
+        android:title="Aplicació">
+        <menu>
+            <item
+                android:id="@+id/perfil"
+                android:icon="@drawable/ic_menu"
+                android:title="El meu perfil"/>
+            <item
+                android:id="@+id/sessio"
+                android:icon="@drawable/ic_menu"
+                android:title="Tancar sessió"/>
+        </menu>
+    </item>
+</menu>

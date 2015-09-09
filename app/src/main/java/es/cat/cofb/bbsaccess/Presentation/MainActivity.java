@@ -1,16 +1,23 @@
-package es.cat.cofb.bbsaccess;
+package es.cat.cofb.bbsaccess.Presentation;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
+import es.cat.cofb.bbsaccess.R;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
+        Button btnSesion = (Button) findViewById(R.id.button);
+        btnSesion.setOnClickListener(this);
     }
 
     @Override
@@ -33,5 +40,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.button:
+                Intent i = new Intent(this, ListActivity.class);
+                //i.putExtra(DetalleActivity.EXTRA_TEXTO, c.getTitle());
+                startActivity(i);
+                break;
+        }
     }
 }
