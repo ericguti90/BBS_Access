@@ -7,14 +7,39 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.content.Context;
+import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
+import android.support.v7.app.ActionBarActivity;
+import android.view.View;
+import android.widget.Toast;
+import android.support.v7.widget.RecyclerView;
 
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import es.cat.cofb.bbsaccess.API.JSONCommentsParser;
+import es.cat.cofb.bbsaccess.Adapters.EventoAdapter;
 import es.cat.cofb.bbsaccess.Fragments.FragmentList;
+import es.cat.cofb.bbsaccess.Listeners.RecyclerItemClickListener;
 import es.cat.cofb.bbsaccess.Model.ItemList;
+import es.cat.cofb.bbsaccess.Model.Resultado;
 import es.cat.cofb.bbsaccess.R;
 
 public class ListActivity extends AppCompatActivity implements FragmentList.ListListener, View.OnClickListener{
@@ -22,23 +47,26 @@ public class ListActivity extends AppCompatActivity implements FragmentList.List
     private Toolbar appbar;
     private DrawerLayout drawerLayout;
     private NavigationView navView;
-    private ItemList[] datos =
+    /*private ItemList[] datos =
             new ItemList[]{
                     new ItemList("Persona 11", "Asunto del correo 11"),
                     new ItemList("Persona 21", "Asunto del correo 21"),
                     new ItemList("Persona 31", "Asunto del correo 31"),
                     new ItemList("Persona 41", "Asunto del correo 41"),
-                    new ItemList("Persona 51", "Asunto del correo 51")};
+                    new ItemList("Persona 51", "Asunto del correo 51")};*/
 
-    FragmentList frgListado;
+    //FragmentList frgListado;
     ImageView btnEvent, btnVotation, btnHistory, btnMenu;
     String actual = "event";
+    RecyclerView eventos;
+    private LinearLayoutManager mLinearLayout;
+    HttpURLConnection con;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-
+        eventos = (RecyclerView) findViewById(R.id.LstListado);
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
 
         navView = (NavigationView)findViewById(R.id.navview);
@@ -71,14 +99,14 @@ public class ListActivity extends AppCompatActivity implements FragmentList.List
                                 break;*/
                         }
 
-                        if (fragmentTransaction) {
+                        /*if (fragmentTransaction) {
                             getSupportFragmentManager().beginTransaction()
                                     .replace(R.id.FrgListado, fragment)
                                     .commit();
 
                             menuItem.setChecked(true);
                             //getSupportActionBar().setTitle(menuItem.getTitle());
-                        }
+                        }*/
 
                         drawerLayout.closeDrawers();
 
@@ -87,8 +115,8 @@ public class ListActivity extends AppCompatActivity implements FragmentList.List
                 });
 
         //listener fragment
-        frgListado = (FragmentList)getSupportFragmentManager().findFragmentById(R.id.FrgListado);
-        frgListado.setListListener(this);
+    //    frgListado = (FragmentList)getSupportFragmentManager().findFragmentById(R.id.FrgListado);
+    //    frgListado.setListListener(this);
 
         //listeners menu
         btnEvent = (ImageView) findViewById(R.id.eventIcon);
@@ -99,6 +127,38 @@ public class ListActivity extends AppCompatActivity implements FragmentList.List
         btnVotation.setOnClickListener(this);
         btnHistory.setOnClickListener(this);
         btnMenu.setOnClickListener(this);
+
+        //LinearLayoutManager necesita el contexto de la Activity.
+        //El LayoutManager se encarga de posicionar los items dentro del recyclerview
+        //Y de definir la politica de reciclaje de los items no visibles.
+        mLinearLayout = new LinearLayoutManager(this);
+        //Asignamos el LinearLayoutManager al recycler:
+        eventos.setLayoutManager(mLinearLayout);
+
+        try {
+            ConnectivityManager connMgr = (ConnectivityManager)
+                    getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+            if (networkInfo != null && networkInfo.isConnected()) {
+                new GetCommentsTask().
+                        execute(
+                                new URL("http://xarxacd.cofb.net/app_accesscontrol/public/api/assistents/5"));
+            } else {
+                Toast.makeText(this, "Error de conexion", Toast.LENGTH_LONG).show();
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        eventos.addOnItemTouchListener(
+                new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+                        // do whatever
+                        Toast.makeText(getApplicationContext(),"Posicion: " + position,Toast.LENGTH_SHORT).show();
+                    }
+                })
+        );
+
     }
 
     @Override
@@ -120,21 +180,21 @@ public class ListActivity extends AppCompatActivity implements FragmentList.List
             case R.id.eventIcon:
                 if(actual != "event") {
                     actual = "event";
-                    frgListado.setList(datos);
+                    //frgListado.setList(datos);
                     setImgStatus(R.drawable.event_push, R.drawable.votation, R.drawable.history);
                 }
                 break;
             case R.id.votationIcon:
                 if(actual != "votation") {
                     actual = "votation";
-                    frgListado.setList(datos);
+                    //frgListado.setList(datos);
                     setImgStatus(R.drawable.event, R.drawable.votation_push, R.drawable.history);
                 }
                 break;
             case R.id.historyIcon:
                 if(actual != "history") {
                     actual = "history";
-                    frgListado.setList(datos);
+                    //frgListado.setList(datos);
                     setImgStatus(R.drawable.event, R.drawable.votation, R.drawable.history_push);
                 }
                 break;
@@ -171,5 +231,74 @@ public class ListActivity extends AppCompatActivity implements FragmentList.List
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /*
+    La clase GetCommentsTask representa una tarea asincrona que realizará
+    las operaciones de red necesarias en segundo plano para obtener toda la
+    lista de comentarios alojada en el servidor.
+     */
+    public class GetCommentsTask extends AsyncTask<URL, Void, Resultado> {
+
+        @Override
+        protected Resultado doInBackground(URL... urls) {
+
+            Resultado eventos = null;
+            try {
+
+                // Establecer la conexión
+                con = (HttpURLConnection)urls[0].openConnection();
+                // Obtener el estado del recurso
+                int statusCode = con.getResponseCode();
+                if(statusCode!=200) {
+                    //eventos = new ArrayList<>();
+                    //eventos.add("El recurso no está disponible");
+                    //return eventos;
+                }
+                else{
+                    /*
+                    Parsear el flujo con formato JSON a una lista de Strings
+                    que permitan crean un adaptador
+                     */
+                    InputStream in = new BufferedInputStream(con.getInputStream());
+                    JSONCommentsParser parser = new JSONCommentsParser();
+                    eventos = parser.readJsonStream(in);
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }finally {
+                con.disconnect();
+            }
+            return eventos;
+        }
+
+        @Override
+        protected void onPostExecute(Resultado s) {
+            /*
+            Se crea un adaptador con el el resultado del parsing
+            que se realizó al arreglo JSON
+             */
+            if(s != null) {
+                //ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                //        getBaseContext(),
+                //        android.R.layout.simple_list_item_1,
+                //        s);
+                // Relacionar adaptador a la lista
+                //s.add("hola");s.add("hola");s.add("hola");s.add("hola");s.add("hola");s.add("hola");s.add("hola");s.add("hola");
+                //ArrayList<Evento> lstEvento = new ArrayList<Evento>();
+                //Evento evento = new Evento(1, "titol1", "23-25-2015", "Col·legi", true, true);
+                //Evento evento1 = new Evento(1, "titulillo", "212-05-2015", "COFB", true, true);
+                //lstEvento.add(evento); lstEvento.add(evento1);
+                eventos.setAdapter(new EventoAdapter(s.getEventos()));
+
+                //eventos.setAdapter(adapter);
+            }
+            else Toast.makeText(
+                    getBaseContext(),
+                    "Ocurrió un error de Parsing Json",
+                    Toast.LENGTH_SHORT)
+                    .show();
+        }
     }
 }

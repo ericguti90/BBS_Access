@@ -86,10 +86,23 @@
             android:clickable="true" />
     </LinearLayout>
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    <!-- <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         class="es.cat.cofb.bbsaccess.Fragments.FragmentList"
         android:id="@+id/FrgListado"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent" /> -->
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/LstListado"
+            android:layout_below="@+id/textView"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="12dp"
+            android:scrollbarStyle="outsideOverlay"
+            android:paddingBottom="7dp"
+            android:paddingLeft="9dp"
+            android:paddingRight="9dp"
+            android:paddingTop="10dp" />
 
 </LinearLayout>
