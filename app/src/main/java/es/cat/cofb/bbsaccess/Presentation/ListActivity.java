@@ -14,47 +14,35 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
-import android.view.View;
 import android.widget.Toast;
-import android.support.v7.widget.RecyclerView;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import es.cat.cofb.bbsaccess.API.JSONCommentsParser;
 import es.cat.cofb.bbsaccess.Adapters.EventoAdapter;
+import es.cat.cofb.bbsaccess.Adapters.VotacionAdapter;
 import es.cat.cofb.bbsaccess.Fragments.FragmentList;
 import es.cat.cofb.bbsaccess.Listeners.RecyclerItemClickListener;
 import es.cat.cofb.bbsaccess.Model.ItemList;
 import es.cat.cofb.bbsaccess.Model.Resultado;
 import es.cat.cofb.bbsaccess.R;
 
-public class ListActivity extends AppCompatActivity implements FragmentList.ListListener, View.OnClickListener{
+public class ListActivity extends AppCompatActivity implements View.OnClickListener{
 
     private Toolbar appbar;
     private DrawerLayout drawerLayout;
     private NavigationView navView;
-    /*private ItemList[] datos =
-            new ItemList[]{
-                    new ItemList("Persona 11", "Asunto del correo 11"),
-                    new ItemList("Persona 21", "Asunto del correo 21"),
-                    new ItemList("Persona 31", "Asunto del correo 31"),
-                    new ItemList("Persona 41", "Asunto del correo 41"),
-                    new ItemList("Persona 51", "Asunto del correo 51")};*/
-
+    public static Resultado api;
+    private boolean esEvento = true;
     //FragmentList frgListado;
     ImageView btnEvent, btnVotation, btnHistory, btnMenu;
     String actual = "event";
@@ -141,8 +129,8 @@ public class ListActivity extends AppCompatActivity implements FragmentList.List
             NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
             if (networkInfo != null && networkInfo.isConnected()) {
                 new GetCommentsTask().
-                        execute(
-                                new URL("http://xarxacd.cofb.net/app_accesscontrol/public/api/assistents/5"));
+                    execute(
+                            new URL("http://xarxacd.cofb.net/app_accesscontrol/public/api/assistents/5"));
             } else {
                 Toast.makeText(this, "Error de conexion", Toast.LENGTH_LONG).show();
             }
@@ -154,19 +142,30 @@ public class ListActivity extends AppCompatActivity implements FragmentList.List
                 new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
                         // do whatever
-                        Toast.makeText(getApplicationContext(),"Posicion: " + position,Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(),"Posicion: " + position,Toast.LENGTH_SHORT).show();
+                        Intent i;
+                        if (esEvento) i = new Intent(getApplicationContext(), DetalleEventoActivity.class);
+                        else i = new Intent(getApplicationContext(), DetalleVotacionActivity.class);
+                        Bundle bundle = new Bundle();
+                        if(esEvento) bundle.putInt("idEvento", position);
+                        else {
+                            bundle.putInt("idVotacion", position);
+                            bundle.putString("feta","VotacioNoFeta");
+                        }
+                        i.putExtras(bundle);
+                        startActivity(i);
                     }
                 })
         );
 
     }
 
-    @Override
+    /*@Override
     public void onItemSelected(ItemList c) {
-        Intent i = new Intent(this, DetalleActivity.class);
-        //i.putExtra(DetalleActivity.EXTRA_TEXTO, c.getTitle());
+        Intent i = new Intent(this, DetalleEventoActivity.class);
+
         startActivity(i);
-    }
+    }*/
 
     @Override
     public void onClick(View v) {
@@ -182,6 +181,8 @@ public class ListActivity extends AppCompatActivity implements FragmentList.List
                     actual = "event";
                     //frgListado.setList(datos);
                     setImgStatus(R.drawable.event_push, R.drawable.votation, R.drawable.history);
+                    eventos.setAdapter(new EventoAdapter(api.getEventos()));
+                    esEvento = true;
                 }
                 break;
             case R.id.votationIcon:
@@ -189,6 +190,8 @@ public class ListActivity extends AppCompatActivity implements FragmentList.List
                     actual = "votation";
                     //frgListado.setList(datos);
                     setImgStatus(R.drawable.event, R.drawable.votation_push, R.drawable.history);
+                    eventos.setAdapter(new VotacionAdapter(api.getVotaciones()));
+                    esEvento = false;
                 }
                 break;
             case R.id.historyIcon:
@@ -196,6 +199,8 @@ public class ListActivity extends AppCompatActivity implements FragmentList.List
                     actual = "history";
                     //frgListado.setList(datos);
                     setImgStatus(R.drawable.event, R.drawable.votation, R.drawable.history_push);
+                    eventos.setAdapter(new EventoAdapter(api.getHistorico()));
+                    esEvento = true;
                 }
                 break;
 
@@ -280,6 +285,7 @@ public class ListActivity extends AppCompatActivity implements FragmentList.List
             que se realizó al arreglo JSON
              */
             if(s != null) {
+                api = s;
                 //ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 //        getBaseContext(),
                 //        android.R.layout.simple_list_item_1,

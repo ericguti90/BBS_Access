@@ -1,5 +1,6 @@
 package es.cat.cofb.bbsaccess.Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -18,6 +19,25 @@ public class Resultado {
 
     public ArrayList<Evento> getEventos() {
         return eventos;
+    }
+
+    public Evento getEvento(int id) {
+        for(int i = 0; i < eventos.size();++i) {
+            if(eventos.get(i).getId() == id) return eventos.get(i);
+        }
+        return null;
+    }
+
+    public Evento getEventoPos(int pos) {
+        return eventos.get(pos);
+    }
+
+    public Votacion getVotacionPos(int pos) {
+        return votaciones.get(pos);
+    }
+
+    public Evento getHistoricoPos(int pos) {
+        return historico.get(pos);
     }
 
     public void setEventos(ArrayList<Evento> eventos) {
@@ -71,4 +91,13 @@ public class Resultado {
             }
         }
     }
+
+    public boolean existeEvento(int id) {
+        for(int i = 0; i < eventos.size(); ++i){
+            if(eventos.get(i).getId() == id) return true;
+        }
+        return false;
+    }
+
+
 }

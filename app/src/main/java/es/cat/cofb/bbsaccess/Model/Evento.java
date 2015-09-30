@@ -1,17 +1,20 @@
 package es.cat.cofb.bbsaccess.Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by ericguti on 12/09/2015.
  */
-public class Evento {
+public class Evento implements Serializable {
     private int id;
     private String titol;
     private String dataHora;
     private String lloc;
     private boolean inscripcio;
     private boolean presencial;
+    private boolean inscrit;
+    private int numAss;
     private ArrayList<Votacion> votacions;
 
     public ArrayList<Votacion> getVotacions() {
@@ -22,13 +25,17 @@ public class Evento {
         this.votacions = votacions;
     }
 
-    public Evento(int id, String titol, String dataHora, String lloc, boolean inscripcio, boolean presencial) {
+
+
+    public Evento(int id, String titol, String dataHora, String lloc, boolean inscripcio, boolean presencial, int numAss, boolean inscrit) {
         this.id = id;
         this.titol = titol;
         this.dataHora = dataHora;
         this.lloc = lloc;
         this.inscripcio = inscripcio;
         this.presencial = presencial;
+        this.numAss = numAss;
+        this.inscrit = inscrit;
         this.votacions = new ArrayList<Votacion>();
     }
 
@@ -82,5 +89,21 @@ public class Evento {
 
     public void addVotacion(Votacion v) {
         votacions.add(v);
+    }
+
+    public int getNumAss() {
+        return numAss;
+    }
+
+    public void setNumAss(int numAss) {
+        this.numAss = numAss;
+    }
+
+    public boolean isInscrit() {
+        return inscrit;
+    }
+
+    public void setInscrit(boolean inscrit) {
+        this.inscrit = inscrit;
     }
 }

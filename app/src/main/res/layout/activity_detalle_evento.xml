@@ -65,7 +65,7 @@
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Large Text"
-            android:id="@+id/textView6"
+            android:id="@+id/tituloEvento"
             android:textColor="#008ba9"
             android:background="#F6FBFC"
             android:padding="10dp" />
@@ -74,7 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/imageView2"
-            android:src="@drawable/tituloFinal"
+            android:src="@drawable/titulo_final"
             android:layout_marginLeft="-5dp" />
 
     </LinearLayout>
@@ -214,7 +214,7 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:text="Accedir | Inscribir-se"
-            android:id="@+id/button"
+            android:id="@+id/buttonAccedir"
             android:layout_gravity="center_horizontal"
             android:background="#e67e22"
             android:textColor="@android:color/white"
@@ -231,7 +231,8 @@
         android:layout_gravity="center_horizontal"
         android:layout_margin="15dp"
         android:background="@drawable/textview_underline2"
-        android:clickable="true">
+        android:clickable="true"
+        android:id="@+id/BtnVotaciones">
 
         <ImageView
             android:layout_width="wrap_content"

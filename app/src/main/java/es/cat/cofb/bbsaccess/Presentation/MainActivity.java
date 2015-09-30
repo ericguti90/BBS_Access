@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.button:
                 Intent i = new Intent(this, ListActivity.class);
-                //i.putExtra(DetalleActivity.EXTRA_TEXTO, c.getTitle());
+
                 startActivity(i);
                 break;
         }

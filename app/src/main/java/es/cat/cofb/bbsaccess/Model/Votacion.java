@@ -11,6 +11,7 @@ public class Votacion {
     private String dataHoraIni;
     private String dataHoraFin;
     private String evento;
+    private String feta;
     private ArrayList<Pregunta> preguntes;
 
     public ArrayList<Pregunta> getPreguntes() {
@@ -72,5 +73,13 @@ public class Votacion {
 
     public void addPreguntes(Pregunta p) {
         preguntes.add(p);
+    }
+
+    public String getFeta() {
+        return feta;
+    }
+
+    public void setFeta(String feta) {
+        this.feta = feta;
     }
 }

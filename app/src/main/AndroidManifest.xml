@@ -19,10 +19,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Presentation.ListActivity"
+        <activity
+            android:name=".Presentation.ListActivity"
             android:label="@string/app_name" />
-        <activity android:name=".Presentation.DetalleActivity"
+        <activity
+            android:name=".Presentation.DetalleEventoActivity"
             android:label="@string/app_name" />
+        <activity
+            android:name=".Presentation.DetalleVotacionActivity"
+            android:label="@string/title_activity_detalle_votacion" >
+        </activity>
     </application>
 
 </manifest>

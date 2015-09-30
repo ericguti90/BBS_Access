@@ -38,10 +38,19 @@ public class JSONCommentsParser {
         while (reader.hasNext()) {
             String name = reader.nextName();
             if(name.equals("data")) readArrayData(reader);
+            else if(name.equals("insOb")) readArrayInsOb(reader);
             else reader.skipValue();
         }
         reader.endObject();
         return result;
+    }
+
+    private void readArrayInsOb(JsonReader reader) throws IOException {
+        reader.beginArray();
+        while (reader.hasNext()) {
+            readObjectEsd(reader, false, false);
+        }
+        reader.endArray();
     }
 
     private void readArrayData(JsonReader reader) throws IOException {
@@ -63,16 +72,16 @@ public class JSONCommentsParser {
                 if (aux.equals("0")) assistit = false;
                 else assistit = true;
             }
-            else if(name.equals("esd")) titol = readObjectEsd(reader, assistit);
+            else if(name.equals("esd")) titol = readObjectEsd(reader, assistit, true);
             else if(name.equals("vota")) readArrayVota(reader,titol,assistit);
             else reader.skipValue();
         }
         reader.endObject();
     }
 
-    private String readObjectEsd(JsonReader reader, boolean assistit) throws IOException {
+    private String readObjectEsd(JsonReader reader, boolean assistit, boolean inscrit) throws IOException {
         String titol = null, dataHora = null, lloc = null, aux;
-        int id = 0;
+        int id = 0, numAss = 0;
         boolean inscripcio = false, presencial = false;
         reader.beginObject();
         while (reader.hasNext()) {
@@ -91,15 +100,17 @@ public class JSONCommentsParser {
                 if (aux.equals("0")) presencial = false;
                 else presencial = true;
             }
+            else if(name.equals("numAss")) numAss = Integer.parseInt(reader.nextString());
             else reader.skipValue();
         }
         reader.endObject();
-        Evento e = new Evento(id, titol, dataHora, lloc, inscripcio, presencial);
-        if(assistit) {
-            result.addHistorico(e);
-            System.out.println(titol + "assistit");
+        if(inscrit || !result.existeEvento(id)) {
+            Evento e = new Evento(id, titol, dataHora, lloc, inscripcio, presencial, numAss, inscrit);
+            if (assistit) {
+                result.addHistorico(e);
+                System.out.println(titol + "assistit");
+            } else result.addEvento(e);
         }
-        else result.addEvento(e);
         return titol;
     }
 
