@@ -1,5 +1,6 @@
 package es.cat.cofb.bbsaccess.Presentation;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,6 +19,7 @@ public class DetalleVotacionActivity extends AppCompatActivity implements View.O
     TextView tituloVotacion, evento, dataHoraIni, dataHoraFin, VotacioFeta;
     Button btn;
     Resultado api;
+    int idV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,8 @@ public class DetalleVotacionActivity extends AppCompatActivity implements View.O
 
         //cargamos datos
         Bundle bundle=getIntent().getExtras();
-        loadVotacion(api.getVotacionPos(bundle.getInt("idVotacion")), bundle.getString("feta"));
+        idV = bundle.getInt("idVotacion");
+        loadVotacion(api.getVotacionPos(idV), bundle.getString("feta"));
     }
 
     private void loadVotacion(Votacion votacion, String feta) {
@@ -73,6 +76,15 @@ public class DetalleVotacionActivity extends AppCompatActivity implements View.O
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()) {
+            case R.id.buttonVotacio:
+                Intent i = new Intent(getApplicationContext(), DetallePreguntaActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("idVotacion", idV);
+                bundle.putInt("numPreg",1);
+                i.putExtras(bundle);
+                startActivity(i);
+                break;
+        }
     }
 }
