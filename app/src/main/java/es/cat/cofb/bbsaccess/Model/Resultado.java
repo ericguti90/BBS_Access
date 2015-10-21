@@ -56,6 +56,13 @@ public class Resultado {
         return historico;
     }
 
+    public Evento getHistoricoId(int id) {
+        for(int i = 0; i < historico.size(); ++i){
+            if(historico.get(i).getId() == id) return historico.get(i);
+        }
+        return null;
+    }
+
     public void setHistorico(ArrayList<Evento> historico) {
         this.historico = historico;
     }
@@ -96,8 +103,17 @@ public class Resultado {
         for(int i = 0; i < eventos.size(); ++i){
             if(eventos.get(i).getId() == id) return true;
         }
+        for(int i = 0; i < historico.size(); ++i){
+            if(historico.get(i).getId() == id) return true;
+        }
         return false;
     }
 
+    public int getPosVotacion(int id) {
+        for(int i = 0; i < votaciones.size(); ++i) {
+            if(votaciones.get(i).getId() == id) return i;
+        }
+        return -1;
+    }
 
 }

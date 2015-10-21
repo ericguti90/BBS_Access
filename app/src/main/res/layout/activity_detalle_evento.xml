@@ -210,19 +210,43 @@
                 android:id="@+id/textView16"
                 android:layout_marginLeft="20dp" />
         </LinearLayout>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="Accedir | Inscribir-se"
-            android:id="@+id/buttonAccedir"
-            android:layout_gravity="center_horizontal"
-            android:background="#e67e22"
-            android:textColor="@android:color/white"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:typeface="sans"
-            android:layout_margin="15dp"
-            android:clickable="true" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:layout_width="130dp"
+                android:layout_height="40dp"
+                android:text="Accedir mitjançant NFC"
+                android:id="@+id/buttonAccedirNFC"
+                android:layout_gravity="center_horizontal"
+                android:background="#e67e22"
+                android:textColor="@android:color/white"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:typeface="sans"
+                android:clickable="true"
+                android:layout_weight="1"
+                android:layout_margin="12dp" />
+
+            <Button
+                android:layout_width="130dp"
+                android:layout_height="40dp"
+                android:text="Accedir mitjançant QR"
+                android:id="@+id/buttonAccedirQR"
+                android:layout_gravity="center_horizontal"
+                android:background="#e67e22"
+                android:textColor="@android:color/white"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:typeface="sans"
+                android:clickable="true"
+                android:layout_weight="1"
+                android:layout_margin="12dp" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <RelativeLayout

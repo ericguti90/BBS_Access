@@ -22,12 +22,13 @@ public class Votacion {
         this.preguntes = preguntes;
     }
 
-    public Votacion(int id, String titol, String dataHoraIni, String dataHoraFin, String evento) {
+    public Votacion(int id, String titol, String dataHoraIni, String dataHoraFin, String evento, String feta) {
         this.id = id;
         this.titol = titol;
         this.dataHoraIni = dataHoraIni;
         this.dataHoraFin = dataHoraFin;
         this.evento = evento;
+        this.feta = feta;
         this.preguntes = new ArrayList<Pregunta>();
     }
 

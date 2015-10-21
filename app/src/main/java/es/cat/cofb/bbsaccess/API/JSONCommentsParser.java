@@ -108,7 +108,6 @@ public class JSONCommentsParser {
             Evento e = new Evento(id, titol, dataHora, lloc, inscripcio, presencial, numAss, inscrit);
             if (assistit) {
                 result.addHistorico(e);
-                System.out.println(titol + "assistit");
             } else result.addEvento(e);
         }
         return titol;
@@ -125,7 +124,7 @@ public class JSONCommentsParser {
     private void readObjectVota(JsonReader reader, String evento, boolean assistit) throws IOException {
         String titol = null, dataHoraIni = null, dataHoraFin = null, aux;
         int id = 0;
-        boolean feta = false;
+        String feta = null;
         ArrayList<Pregunta> preg = null;
         reader.beginObject();
         while (reader.hasNext()) {
@@ -136,16 +135,15 @@ public class JSONCommentsParser {
             else if(name.equals("dataHoraFin")) dataHoraFin = reader.nextString();
             else if(name.equals("feta")) {
                 aux = reader.nextString();
-                if (aux.equals("votacioNoFeta")) feta = false;
-                else feta = true;
+                feta = aux;
             }
             else if(name.equals("preguntes")) preg = readArrayPreg(reader);
             else reader.skipValue();
         }
         reader.endObject();
-        Votacion v = new Votacion(id, titol, dataHoraIni, dataHoraFin, evento);
+        Votacion v = new Votacion(id, titol, dataHoraIni, dataHoraFin, evento,feta);
         v.setPreguntes(preg);
-        if(!feta) result.addVotacion(v);
+        if(feta.equals("votacioNoFeta")) result.addVotacion(v);
         result.addVotacionEvento(evento, v, assistit);
     }
 
@@ -176,8 +174,11 @@ public class JSONCommentsParser {
             else reader.skipValue();
         }
         reader.endObject();
-        String[] lOpcions = opcions.split(", ");
-        ArrayList<String> vOpcions = new ArrayList<String>(Arrays.asList(lOpcions));
+        ArrayList<String> vOpcions = new ArrayList<String>();
+        if(!opcions.equals("")) {
+            String[] lOpcions = opcions.split(", ");
+            vOpcions = new ArrayList<String>(Arrays.asList(lOpcions));
+        }
         Pregunta p = new Pregunta(id,titol,vOpcions,obligatoria);
         return p;
     }

@@ -3,6 +3,11 @@ package es.cat.cofb.bbsaccess.API;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 public class POST {
 
@@ -82,6 +87,15 @@ public class POST {
             }
         }
         //return "errorFin";
+    }
+
+    public static String getDateTime() {
+        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Europe/Madrid"));
+        Date currentLocalTime = cal.getTime();
+        DateFormat date = new SimpleDateFormat("yyy-MM-dd HH:mm:ss");
+        date.setTimeZone(TimeZone.getTimeZone("Europe/Madrid"));
+        String localTime = date.format(currentLocalTime);
+        return localTime;
     }
 
 }

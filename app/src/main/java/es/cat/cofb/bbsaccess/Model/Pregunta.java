@@ -10,12 +10,14 @@ public class Pregunta {
     private String titol;
     private ArrayList<String> opcions;
     private boolean obligatoria;
+    private String resposta;
 
     public Pregunta(int id, String titol, ArrayList<String> opcions, boolean obligatoria) {
         this.id = id;
         this.titol = titol;
         this.opcions = opcions;
         this.obligatoria = obligatoria;
+        this.resposta = null;
     }
 
     public int getId() {
@@ -48,5 +50,13 @@ public class Pregunta {
 
     public void setObligatoria(boolean obligatoria) {
         this.obligatoria = obligatoria;
+    }
+
+    public String getResposta() {
+        return resposta;
+    }
+
+    public void setResposta(String resposta) {
+        this.resposta = resposta;
     }
 }

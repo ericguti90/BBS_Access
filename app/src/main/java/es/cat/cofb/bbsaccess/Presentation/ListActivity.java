@@ -26,6 +26,11 @@ import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 import es.cat.cofb.bbsaccess.API.JSONCommentsParser;
 import es.cat.cofb.bbsaccess.Adapters.EventoAdapter;
@@ -43,12 +48,14 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     private NavigationView navView;
     public static Resultado api;
     private boolean esEvento = true;
+    private boolean esHistorico = false;
     //FragmentList frgListado;
     ImageView btnEvent, btnVotation, btnHistory, btnMenu;
     String actual = "event";
     RecyclerView eventos;
     private LinearLayoutManager mLinearLayout;
     HttpURLConnection con;
+    private int user = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,7 +137,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             if (networkInfo != null && networkInfo.isConnected()) {
                 new GetCommentsTask().
                     execute(
-                            new URL("http://xarxacd.cofb.net/app_accesscontrol/public/api/assistents/5"));
+                            new URL("http://xarxacd.cofb.net/app_accesscontrol/public/api/assistents/"+user));
             } else {
                 Toast.makeText(this, "Error de conexion", Toast.LENGTH_LONG).show();
             }
@@ -140,25 +147,32 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
 
         eventos.addOnItemTouchListener(
                 new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override public void onItemClick(View view, int position) {
+                    @Override
+                    public void onItemClick(View view, int position) {
                         // do whatever
                         //Toast.makeText(getApplicationContext(),"Posicion: " + position,Toast.LENGTH_SHORT).show();
                         Intent i;
-                        if (esEvento) i = new Intent(getApplicationContext(), DetalleEventoActivity.class);
+                        if (esEvento)
+                            i = new Intent(getApplicationContext(), DetalleEventoActivity.class);
                         else i = new Intent(getApplicationContext(), DetalleVotacionActivity.class);
                         Bundle bundle = new Bundle();
-                        if(esEvento) bundle.putInt("idEvento", position);
-                        else {
+                        if (esEvento) {
+                            bundle.putInt("idEvento", position);
+                            bundle.putInt("idUsuari", user);
+                            System.out.println("esHistorico? " + esHistorico);
+                            bundle.putBoolean("esHistorico", esHistorico);
+                        } else {
                             bundle.putInt("idVotacion", position);
-                            bundle.putString("feta","VotacioNoFeta");
+                            bundle.putString("feta", "VotacioNoFeta");
+                            bundle.putInt("idUsuari", user);
                         }
                         i.putExtras(bundle);
                         startActivity(i);
                     }
                 })
         );
-
     }
+
 
     /*@Override
     public void onItemSelected(ItemList c) {
@@ -183,6 +197,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                     setImgStatus(R.drawable.event_push, R.drawable.votation, R.drawable.history);
                     eventos.setAdapter(new EventoAdapter(api.getEventos()));
                     esEvento = true;
+                    esHistorico = false;
                 }
                 break;
             case R.id.votationIcon:
@@ -192,6 +207,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                     setImgStatus(R.drawable.event, R.drawable.votation_push, R.drawable.history);
                     eventos.setAdapter(new VotacionAdapter(api.getVotaciones()));
                     esEvento = false;
+                    esHistorico = false;
                 }
                 break;
             case R.id.historyIcon:
@@ -201,6 +217,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                     setImgStatus(R.drawable.event, R.drawable.votation, R.drawable.history_push);
                     eventos.setAdapter(new EventoAdapter(api.getHistorico()));
                     esEvento = true;
+                    esHistorico = true;
                 }
                 break;
 
