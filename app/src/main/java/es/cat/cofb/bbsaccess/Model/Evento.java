@@ -16,6 +16,7 @@ public class Evento implements Serializable {
     private boolean inscrit;
     private int numAss;
     private ArrayList<Votacion> votacions;
+    private int idUsuari;
 
     public ArrayList<Votacion> getVotacions() {
         return votacions;
@@ -27,7 +28,7 @@ public class Evento implements Serializable {
 
 
 
-    public Evento(int id, String titol, String dataHora, String lloc, boolean inscripcio, boolean presencial, int numAss, boolean inscrit) {
+    public Evento(int id, String titol, String dataHora, String lloc, boolean inscripcio, boolean presencial, int numAss, boolean inscrit, int idUsuari) {
         this.id = id;
         this.titol = titol;
         this.dataHora = dataHora;
@@ -37,6 +38,7 @@ public class Evento implements Serializable {
         this.numAss = numAss;
         this.inscrit = inscrit;
         this.votacions = new ArrayList<Votacion>();
+        this.idUsuari = idUsuari;
     }
 
     public int getId() {
@@ -105,5 +107,13 @@ public class Evento implements Serializable {
 
     public void setInscrit(boolean inscrit) {
         this.inscrit = inscrit;
+    }
+
+    public int getIdUsuari() {
+        return idUsuari;
+    }
+
+    public void setIdUsuari(int idUsuari) {
+        this.idUsuari = idUsuari;
     }
 }

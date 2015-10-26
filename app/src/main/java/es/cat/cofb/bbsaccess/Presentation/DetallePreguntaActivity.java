@@ -60,6 +60,7 @@ public class DetallePreguntaActivity extends AppCompatActivity implements View.O
         idV = bundle.getInt("idVotacion");
         numP = bundle.getInt("numPreg");
         idUsuari = bundle.getInt("idUsuari");
+        System.out.println("usuariP:"+idUsuari);
         v = api.getVotacionPos(idV);
         loadPregunta();
     }
@@ -125,6 +126,7 @@ public class DetallePreguntaActivity extends AppCompatActivity implements View.O
                     Bundle sent = new Bundle();
                     sent.putInt("idVotacion",idV);
                     sent.putInt("numPreg", numP + 1);
+                    sent.putInt("idUsuari", idUsuari);
                     Intent i = new Intent(getApplicationContext(), DetallePreguntaActivity.class);
                     i.putExtras(sent);
                     startActivityForResult(i, 1);

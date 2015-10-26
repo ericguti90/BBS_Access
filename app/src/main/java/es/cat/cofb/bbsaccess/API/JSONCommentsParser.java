@@ -48,7 +48,7 @@ public class JSONCommentsParser {
     private void readArrayInsOb(JsonReader reader) throws IOException {
         reader.beginArray();
         while (reader.hasNext()) {
-            readObjectEsd(reader, false, false);
+            readObjectEsd(reader, false, false, 0);
         }
         reader.endArray();
     }
@@ -63,6 +63,7 @@ public class JSONCommentsParser {
 
     private void readObjectUser(JsonReader reader) throws IOException {
         String aux = null, titol = null;
+        int idUsuari = -1;
         boolean assistit = false;
         reader.beginObject();
         while (reader.hasNext()) {
@@ -72,14 +73,18 @@ public class JSONCommentsParser {
                 if (aux.equals("0")) assistit = false;
                 else assistit = true;
             }
-            else if(name.equals("esd")) titol = readObjectEsd(reader, assistit, true);
-            else if(name.equals("vota")) readArrayVota(reader,titol,assistit);
+            else if(name.equals("id")) {
+                aux = reader.nextString();
+                idUsuari = Integer.parseInt(aux);
+            }
+            else if(name.equals("esd")) titol = readObjectEsd(reader, assistit, true, idUsuari);
+            else if(name.equals("vota")) readArrayVota(reader,titol,assistit, idUsuari);
             else reader.skipValue();
         }
         reader.endObject();
     }
 
-    private String readObjectEsd(JsonReader reader, boolean assistit, boolean inscrit) throws IOException {
+    private String readObjectEsd(JsonReader reader, boolean assistit, boolean inscrit, int idUsuari) throws IOException {
         String titol = null, dataHora = null, lloc = null, aux;
         int id = 0, numAss = 0;
         boolean inscripcio = false, presencial = false;
@@ -105,7 +110,7 @@ public class JSONCommentsParser {
         }
         reader.endObject();
         if(inscrit || !result.existeEvento(id)) {
-            Evento e = new Evento(id, titol, dataHora, lloc, inscripcio, presencial, numAss, inscrit);
+            Evento e = new Evento(id, titol, dataHora, lloc, inscripcio, presencial, numAss, inscrit, idUsuari);
             if (assistit) {
                 result.addHistorico(e);
             } else result.addEvento(e);
@@ -113,15 +118,15 @@ public class JSONCommentsParser {
         return titol;
     }
 
-    private void readArrayVota(JsonReader reader, String titol, boolean assistit) throws IOException {
+    private void readArrayVota(JsonReader reader, String titol, boolean assistit, int idUsuari) throws IOException {
         reader.beginArray();
         while (reader.hasNext()) {
-            readObjectVota(reader, titol, assistit);
+            readObjectVota(reader, titol, assistit, idUsuari);
         }
         reader.endArray();
     }
 
-    private void readObjectVota(JsonReader reader, String evento, boolean assistit) throws IOException {
+    private void readObjectVota(JsonReader reader, String evento, boolean assistit, int idUsuari) throws IOException {
         String titol = null, dataHoraIni = null, dataHoraFin = null, aux;
         int id = 0;
         String feta = null;
@@ -141,9 +146,9 @@ public class JSONCommentsParser {
             else reader.skipValue();
         }
         reader.endObject();
-        Votacion v = new Votacion(id, titol, dataHoraIni, dataHoraFin, evento,feta);
+        Votacion v = new Votacion(id, titol, dataHoraIni, dataHoraFin, evento,feta, idUsuari);
         v.setPreguntes(preg);
-        if(feta.equals("votacioNoFeta")) result.addVotacion(v);
+        if(feta.equals("votacioNoFeta") && assistit) result.addVotacion(v);
         result.addVotacionEvento(evento, v, assistit);
     }
 

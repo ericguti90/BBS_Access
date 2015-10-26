@@ -42,7 +42,6 @@ public class DetalleVotacionActivity extends AppCompatActivity implements View.O
         //cargamos datos
         Bundle bundle=getIntent().getExtras();
         idV = bundle.getInt("idVotacion");
-        idUsuari = bundle.getInt("idUsuari");
         if(idV == -1) {
             Evento e = api.getHistoricoId(bundle.getInt("idEvento"));
             loadVotacion(e.getVotacions().get(bundle.getInt("position")));
@@ -54,6 +53,8 @@ public class DetalleVotacionActivity extends AppCompatActivity implements View.O
     }
 
     private void loadVotacion(Votacion votacion) {
+        idUsuari = votacion.getIdUsuari();
+        System.out.println("usuari: " + idUsuari);
         lyOKVota.setVisibility(View.GONE);
         tituloVotacion.setText(votacion.getTitol());
         evento.setText(votacion.getEvento());
@@ -64,6 +65,7 @@ public class DetalleVotacionActivity extends AppCompatActivity implements View.O
             VotacioFeta.setText("Si");
             btn.setVisibility(View.GONE);
         }
+
     }
 
     @Override
@@ -109,6 +111,7 @@ public class DetalleVotacionActivity extends AppCompatActivity implements View.O
         if ((requestCode == 1) && (resultCode == RESULT_OK)){
             lyOKVota.setVisibility(View.VISIBLE);
             btn.setVisibility(View.GONE);
+            VotacioFeta.setText("Si");
         }
     }
 }

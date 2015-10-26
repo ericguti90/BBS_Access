@@ -34,7 +34,7 @@ public class DadesVotacio extends AsyncTask<String, Integer, Boolean> {
             publishProgress(enviats);
             //System.out.println("i: " + i + " ;idV:" + v.getId() + " ;pregunta:" + p.get(i).getId() + " ;idU:" + String.valueOf(idUsuari) + " ;resposta:" + p.get(i).getResposta() + " ;data:"+ POST.getDateTime());
             String targetURL="http://xarxacd.cofb.net/app_accesscontrol/public/votacions/"+DPActivity.v.getId()+"/preguntes/"+ p.get(i).getId() +"/respostes";
-            //System.out.println("url:" +targetURL);
+            System.out.println("url:" +targetURL);
             String urlParameters = null;
             try {
                 urlParameters =
@@ -48,7 +48,7 @@ public class DadesVotacio extends AsyncTask<String, Integer, Boolean> {
                 //Toast.makeText(getApplicationContext(),"Error a l'enviar les respostes", Toast.LENGTH_SHORT).show();
             }
             int result = POST.excutePost(targetURL, urlParameters);
-            //System.out.println("Resultat: " + result);
+            System.out.println("Resultat: " + result);
         }
         /*for(int i=1; i<=10; i++) {
             tareaLarga();
