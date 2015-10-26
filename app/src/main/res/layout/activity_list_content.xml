@@ -86,6 +86,32 @@
             android:clickable="true" />
     </LinearLayout>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Esdeveniments"
+            android:id="@+id/textList"
+            android:textColor="#008ba9"
+            android:background="#F6FBFC"
+            android:padding="10dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView2"
+            android:src="@drawable/titulo_final"
+            android:layout_marginLeft="-5dp" />
+
+    </LinearLayout>
+
     <!-- <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         class="es.cat.cofb.bbsaccess.Fragments.FragmentList"
         android:id="@+id/FrgListado"

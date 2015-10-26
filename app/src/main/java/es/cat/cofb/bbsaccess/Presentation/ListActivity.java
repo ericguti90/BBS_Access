@@ -57,7 +57,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     RecyclerView eventos;
     private LinearLayoutManager mLinearLayout;
     HttpURLConnection con;
-    TextView txtError;
+    TextView txtError, textList;
     LinearLayout lyError;
     private int user = 5;
 
@@ -69,6 +69,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         eventos = (RecyclerView) findViewById(R.id.LstListado);
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         txtError = (TextView) findViewById(R.id.textView31);
+        textList = (TextView) findViewById(R.id.textList);
         lyError = (LinearLayout) findViewById(R.id.avisError);
         navView = (NavigationView)findViewById(R.id.navview);
         navView.setNavigationItemSelectedListener(
@@ -200,6 +201,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 if(actual != "event") {
                     actual = "event";
                     //frgListado.setList(datos);
+                    textList.setText("Esdeveniments");
                     setImgStatus(R.drawable.event_push, R.drawable.votation, R.drawable.history);
                     if(api.getEventos().size() == 0) {
                         eventos.setVisibility(View.GONE);
@@ -215,6 +217,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.votationIcon:
                 if(actual != "votation") {
                     actual = "votation";
+                    textList.setText("Votacions");
                     //frgListado.setList(datos);
                     setImgStatus(R.drawable.event, R.drawable.votation_push, R.drawable.history);
                     if(api.getVotaciones().size() == 0) eventos.setVisibility(View.GONE);
@@ -229,6 +232,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.historyIcon:
                 if(actual != "history") {
                     actual = "history";
+                    textList.setText("Històrics");
                     //frgListado.setList(datos);
                     setImgStatus(R.drawable.event, R.drawable.votation, R.drawable.history_push);
                     if(api.getHistorico().size() == 0) eventos.setVisibility(View.GONE);
