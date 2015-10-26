@@ -79,73 +79,99 @@
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="1/8"
-        android:id="@+id/textView27"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="right"
-        android:layout_marginRight="15dp"
-        android:textColor="#008BA9"
-        android:background="#DDEAED"
-        android:paddingLeft="15dp"
-        android:paddingTop="10dp"
-        android:paddingRight="15dp"
-        android:paddingBottom="10dp" />
-
-    <LinearLayout
-        android:orientation="vertical"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#f4f6f4"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:weightSum="1">
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:paddingTop="10dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Medium Text"
-            android:id="@+id/textView26"
-            android:layout_margin="15dp"
-            android:textStyle="bold|italic"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:ems="10"
-            android:id="@+id/editText3"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1.66"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp" />
-
-        <RadioGroup
-            android:id="@+id/radioGroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            // This is where our buttons will be
-        </RadioGroup>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="Següent | finalitzar"
-            android:id="@+id/buttonResposta"
-            android:layout_gravity="center_horizontal"
-            android:background="#e67e22"
+            android:text="Resposta obligatòria"
+            android:id="@+id/RObligatoria"
+            android:paddingLeft="15dp"
+            android:paddingTop="10dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:background="#ba3d00"
             android:textColor="@android:color/white"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:typeface="sans"
-            android:layout_margin="15dp"
-            android:clickable="true" />
-    </LinearLayout>
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="1/8"
+            android:id="@+id/textView27"
+            android:layout_gravity="right"
+            android:textColor="#008BA9"
+            android:background="#DDEAED"
+            android:paddingLeft="15dp"
+            android:paddingTop="10dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#f4f6f4"
+            android:weightSum="1"
+            android:layout_below="@+id/textView27"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Medium Text"
+                android:id="@+id/textView26"
+                android:layout_margin="15dp"
+                android:textStyle="bold|italic"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:ems="10"
+                android:id="@+id/editText3"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1.66"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="15dp" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                // This is where our buttons will be
+            </RadioGroup>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Següent | finalitzar"
+                android:id="@+id/buttonResposta"
+                android:layout_gravity="center_horizontal"
+                android:background="#e67e22"
+                android:textColor="@android:color/white"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:typeface="sans"
+                android:layout_margin="15dp"
+                android:clickable="true" />
+        </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

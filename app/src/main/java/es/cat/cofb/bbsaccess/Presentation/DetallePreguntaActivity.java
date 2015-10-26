@@ -1,6 +1,8 @@
 package es.cat.cofb.bbsaccess.Presentation;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +21,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import es.cat.cofb.bbsaccess.API.POST;
+import es.cat.cofb.bbsaccess.AsynTask.DadesVotacio;
 import es.cat.cofb.bbsaccess.Model.Pregunta;
 import es.cat.cofb.bbsaccess.Model.Resultado;
 import es.cat.cofb.bbsaccess.Model.Votacion;
@@ -28,14 +31,16 @@ import es.cat.cofb.bbsaccess.R;
  * Created by egutierrez on 30/09/2015.
  */
 public class DetallePreguntaActivity extends AppCompatActivity implements View.OnClickListener {
-    TextView contador, pregunta, titulo;
+    TextView contador, pregunta, titulo, resOb;
     EditText resposta;
     Button btn;
     ViewGroup vg;
     Resultado api;
     int idV, numP, idUsuari;
-    Votacion v;
-    String respostaRB = null;
+    public Votacion v;
+    String respostaRB = "";
+    public ProgressDialog pDialog;
+    DadesVotacio dv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +52,7 @@ public class DetallePreguntaActivity extends AppCompatActivity implements View.O
         resposta = (EditText)findViewById(R.id.editText3);
         btn = (Button)findViewById(R.id.buttonResposta);
         vg = (ViewGroup)findViewById(R.id.radioGroup);
+        resOb = (TextView)findViewById(R.id.RObligatoria);
         btn.setOnClickListener(this);
         api = ListActivity.api;
         //cargamos datos
@@ -59,6 +65,7 @@ public class DetallePreguntaActivity extends AppCompatActivity implements View.O
     }
 
     private void loadPregunta() {
+        resOb.setVisibility(View.GONE);
         titulo.setText(v.getTitol());
         int total = v.getPreguntes().size();
         contador.setText(numP+"/"+total);
@@ -94,7 +101,21 @@ public class DetallePreguntaActivity extends AppCompatActivity implements View.O
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.buttonResposta:
-                if(btn.getText().equals("Continuar")) {
+                if(v.getPreguntes().get(numP - 1).isObligatoria()){
+                    if(v.getPreguntes().get(numP-1).getOpcions().size() == 0) {
+                        if(resposta.getText().toString().equals("")) {
+                            resOb.setVisibility(View.VISIBLE);
+                            break;
+                        }
+                    }
+                    else {
+                        if(respostaRB.equals("")) {
+                            resOb.setVisibility(View.VISIBLE);
+                            break;
+                        }
+                    }
+                }
+                if (btn.getText().equals("Continuar")) {
                     if(v.getPreguntes().get(numP-1).getOpcions().size() == 0) {
                         v.getPreguntes().get(numP-1).setResposta(resposta.getText().toString());
 
@@ -103,23 +124,34 @@ public class DetallePreguntaActivity extends AppCompatActivity implements View.O
                     }
                     Bundle sent = new Bundle();
                     sent.putInt("idVotacion",idV);
-                    sent.putInt("numPreg", numP+1);
+                    sent.putInt("numPreg", numP + 1);
                     Intent i = new Intent(getApplicationContext(), DetallePreguntaActivity.class);
                     i.putExtras(sent);
-                    startActivity(i);
-                    finish();
+                    startActivityForResult(i, 1);
+
                 }else{
                     if(v.getPreguntes().get(numP-1).getOpcions().size() == 0)
                         v.getPreguntes().get(numP-1).setResposta(resposta.getText().toString());
                     else
                         v.getPreguntes().get(numP-1).setResposta(respostaRB);
-                        enviarRespostes();
+                    enviarRespostes();
                 }
                 break;
-        }
+            }
     }
 
     private void enviarRespostes() {
+        pDialog = new ProgressDialog(this);
+        pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        pDialog.setMessage("Enviant dades...");
+        pDialog.setCancelable(false);
+        //pDialog.setMax(100);
+        dv = new DadesVotacio(this);
+        dv.execute(String.valueOf(idUsuari));
+
+
+
+/*
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         ArrayList<Pregunta> p = v.getPreguntes();
@@ -142,6 +174,24 @@ public class DetallePreguntaActivity extends AppCompatActivity implements View.O
             System.out.println("Resultat: " + result);
         }
         v.setFeta("votacioFeta");
-        Toast.makeText(getApplicationContext(),"Enviat", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(),"Enviat", Toast.LENGTH_SHORT).show();*/
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        // TODO Auto-generated method stub
+        if ((requestCode == 1) && (resultCode == RESULT_OK)){
+            Intent data = new Intent();
+            data.setData(Uri.parse("RESULT_OK"));
+            setResult(RESULT_OK, data);
+        }
+        finish();
+    }
+
+    public void fin() {
+        Intent data = new Intent();
+        data.setData(Uri.parse("RESULT_OK"));
+        setResult(RESULT_OK, data);
+        finish();
     }
 }

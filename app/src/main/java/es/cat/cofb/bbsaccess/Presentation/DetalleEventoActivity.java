@@ -9,6 +9,7 @@ import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -29,6 +30,7 @@ public class DetalleEventoActivity extends AppCompatActivity implements View.OnC
 	Bundle bundle;
 	int id;
 	private NfcAdapter mNfcAdapter;
+	LinearLayout lyOK;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,7 @@ public class DetalleEventoActivity extends AppCompatActivity implements View.OnC
 		tituloEvento = (TextView) findViewById(R.id.tituloEvento);
 		btnQR = (Button) findViewById(R.id.buttonAccedirQR);
 		btnNFC = (Button) findViewById(R.id.buttonAccedirNFC);
+		lyOK = (LinearLayout) findViewById(R.id.lytGreenEvento);
 		btnQR.setOnClickListener(this);
 		btnNFC.setOnClickListener(this);
 		RelativeLayout rel = (RelativeLayout) findViewById(R.id.BtnVotaciones);
@@ -59,12 +62,15 @@ public class DetalleEventoActivity extends AppCompatActivity implements View.OnC
         api = ListActivity.api;
 		if(bundle.getBoolean("esHistorico")) {
 			loadEvento(api.getHistoricoPos(bundle.getInt("idEvento")));
+		}
+		else {
+			loadEvento(api.getEventoPos(bundle.getInt("idEvento")));
 			rel.setVisibility(View.GONE);
 		}
-		else loadEvento(api.getEventoPos(bundle.getInt("idEvento")));
 	}
 
 	private void loadEvento(Evento evento) {
+		lyOK.setVisibility(View.GONE);
 		id = evento.getId();
 		tituloEvento.setText(evento.getTitol());
 		dataHora.setText(evento.getDataHora());
@@ -115,6 +121,7 @@ public class DetalleEventoActivity extends AppCompatActivity implements View.OnC
 						e.setInscrit(true);
 						btnQR.setText("Accedir mitjançant QR");
 						if (mNfcAdapter != null) btnNFC.setVisibility(View.VISIBLE);
+						lyOK.setVisibility(View.VISIBLE);
 					}
 				}
 

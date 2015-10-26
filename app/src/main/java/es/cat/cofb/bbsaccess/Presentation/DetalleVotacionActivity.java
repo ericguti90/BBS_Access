@@ -1,12 +1,14 @@
 package es.cat.cofb.bbsaccess.Presentation;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,6 +23,7 @@ public class DetalleVotacionActivity extends AppCompatActivity implements View.O
     Button btn;
     Resultado api;
     int idV, idUsuari;
+    LinearLayout lyOKVota;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,7 @@ public class DetalleVotacionActivity extends AppCompatActivity implements View.O
         dataHoraFin = (TextView) findViewById(R.id.textView23);
         VotacioFeta = (TextView) findViewById(R.id.textView25);
         tituloVotacion = (TextView) findViewById(R.id.textView28);
+        lyOKVota = (LinearLayout) findViewById(R.id.lytGreenVota);
         btn = (Button) findViewById(R.id.buttonVotacio);
         btn.setOnClickListener(this);
         api = ListActivity.api;
@@ -50,6 +54,7 @@ public class DetalleVotacionActivity extends AppCompatActivity implements View.O
     }
 
     private void loadVotacion(Votacion votacion) {
+        lyOKVota.setVisibility(View.GONE);
         tituloVotacion.setText(votacion.getTitol());
         evento.setText(votacion.getEvento());
         dataHoraIni.setText(votacion.getDataHoraIni());
@@ -93,8 +98,17 @@ public class DetalleVotacionActivity extends AppCompatActivity implements View.O
                 bundle.putInt("numPreg",1);
                 bundle.putInt("idUsuari",idUsuari);
                 i.putExtras(bundle);
-                startActivity(i);
+                startActivityForResult(i,1);
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        // TODO Auto-generated method stub
+        if ((requestCode == 1) && (resultCode == RESULT_OK)){
+            lyOKVota.setVisibility(View.VISIBLE);
+            btn.setVisibility(View.GONE);
         }
     }
 }

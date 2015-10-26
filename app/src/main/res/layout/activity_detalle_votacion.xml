@@ -200,5 +200,47 @@
             android:layout_margin="15dp"
             android:clickable="true" />
     </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/border_check_green"
+        android:padding="10dp"
+        android:layout_margin="20dp"
+        android:id="@+id/lytGreenVota">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/imageView6"
+            android:src="@drawable/check_green"
+            android:layout_marginBottom="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Moltes gràcies"
+                android:id="@+id/textView29"
+                android:textColor="#04918a" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="les seves dades s&apos;han enviat correctament"
+                android:id="@+id/textView30"
+                android:textColor="#04918a" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

@@ -18,6 +18,8 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedInputStream;
@@ -55,15 +57,19 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     RecyclerView eventos;
     private LinearLayoutManager mLinearLayout;
     HttpURLConnection con;
+    TextView txtError;
+    LinearLayout lyError;
     private int user = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+        api = new Resultado();
         eventos = (RecyclerView) findViewById(R.id.LstListado);
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-
+        txtError = (TextView) findViewById(R.id.textView31);
+        lyError = (LinearLayout) findViewById(R.id.avisError);
         navView = (NavigationView)findViewById(R.id.navview);
         navView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -195,7 +201,13 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                     actual = "event";
                     //frgListado.setList(datos);
                     setImgStatus(R.drawable.event_push, R.drawable.votation, R.drawable.history);
-                    eventos.setAdapter(new EventoAdapter(api.getEventos()));
+                    if(api.getEventos().size() == 0) {
+                        eventos.setVisibility(View.GONE);
+                    }
+                    else {
+                        eventos.setVisibility(View.VISIBLE);
+                        eventos.setAdapter(new EventoAdapter(api.getEventos()));
+                    }
                     esEvento = true;
                     esHistorico = false;
                 }
@@ -205,7 +217,11 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                     actual = "votation";
                     //frgListado.setList(datos);
                     setImgStatus(R.drawable.event, R.drawable.votation_push, R.drawable.history);
-                    eventos.setAdapter(new VotacionAdapter(api.getVotaciones()));
+                    if(api.getVotaciones().size() == 0) eventos.setVisibility(View.GONE);
+                    else {
+                        eventos.setVisibility(View.VISIBLE);
+                        eventos.setAdapter(new VotacionAdapter(api.getVotaciones()));
+                    }
                     esEvento = false;
                     esHistorico = false;
                 }
@@ -215,7 +231,12 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                     actual = "history";
                     //frgListado.setList(datos);
                     setImgStatus(R.drawable.event, R.drawable.votation, R.drawable.history_push);
-                    eventos.setAdapter(new EventoAdapter(api.getHistorico()));
+                    if(api.getHistorico().size() == 0) eventos.setVisibility(View.GONE);
+                    else {
+                        eventos.setVisibility(View.VISIBLE);
+                        eventos.setAdapter(new EventoAdapter(api.getHistorico()));
+                    }
+
                     esEvento = true;
                     esHistorico = true;
                 }
@@ -313,7 +334,29 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 //Evento evento = new Evento(1, "titol1", "23-25-2015", "Col·legi", true, true);
                 //Evento evento1 = new Evento(1, "titulillo", "212-05-2015", "COFB", true, true);
                 //lstEvento.add(evento); lstEvento.add(evento1);
-                eventos.setAdapter(new EventoAdapter(s.getEventos()));
+                if(esEvento && esHistorico) {
+                    if(api.getHistorico().size() == 0) eventos.setVisibility(View.GONE);
+                    else {
+                        eventos.setVisibility(View.VISIBLE);
+                        eventos.setAdapter(new EventoAdapter(api.getHistorico()));
+                    }
+                }
+                else if(esEvento) {
+                    if(api.getEventos().size() == 0) eventos.setVisibility(View.GONE);
+                    else {
+                        eventos.setVisibility(View.VISIBLE);
+                        eventos.setAdapter(new EventoAdapter(s.getEventos()));
+                    }
+                }
+                else {
+                    if(api.getVotaciones().size() == 0) eventos.setVisibility(View.GONE);
+                    else {
+                        eventos.setVisibility(View.VISIBLE);
+                        eventos.setAdapter(new VotacionAdapter(api.getVotaciones()));
+                    }
+
+                }
+
 
                 //eventos.setAdapter(adapter);
             }
