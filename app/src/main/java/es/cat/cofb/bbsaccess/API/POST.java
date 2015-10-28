@@ -1,5 +1,8 @@
 package es.cat.cofb.bbsaccess.API;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -10,6 +13,8 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class POST {
+
+    public static String response;
 
     public static int excutePost(String targetURL, String urlParameters)
     {
@@ -51,8 +56,20 @@ public class POST {
 
             // handle issues
             int statusCode = connection.getResponseCode();
+
+            InputStream is = connection.getInputStream();
+            BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+            String line;
+            StringBuffer responseAux = new StringBuffer();
+            while((line = rd.readLine()) != null) {
+                responseAux.append(line);
+                responseAux.append('\r');
+            }
+            rd.close();
+            response = responseAux.toString();
+            System.out.println("response: " + response);
             //if (statusCode != 201) {
-                System.out.println("status: " + statusCode);
+                //System.out.println("status: " + statusCode);
             //}
             //else System.out.println("status: " + statusCode + "(creada)");
             //return "fin";

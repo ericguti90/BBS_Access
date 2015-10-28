@@ -34,21 +34,21 @@ public class DadesVotacio extends AsyncTask<String, Integer, Boolean> {
             publishProgress(enviats);
             //System.out.println("i: " + i + " ;idV:" + v.getId() + " ;pregunta:" + p.get(i).getId() + " ;idU:" + String.valueOf(idUsuari) + " ;resposta:" + p.get(i).getResposta() + " ;data:"+ POST.getDateTime());
             String targetURL="http://xarxacd.cofb.net/app_accesscontrol/public/votacions/"+DPActivity.v.getId()+"/preguntes/"+ p.get(i).getId() +"/respostes";
-            System.out.println("url:" +targetURL);
+            //System.out.println("url:" +targetURL);
             String urlParameters = null;
             try {
                 urlParameters =
                         "idUsuari=" + URLEncoder.encode(params[0]/*idUsuari*/, "UTF-8") +
                                 "&resposta=" + URLEncoder.encode(p.get(i).getResposta(), "UTF-8") +
                                 "&dataHora=" + URLEncoder.encode(POST.getDateTime(), "UTF-8");
-                System.out.println("parametres: " + urlParameters);
+                //System.out.println("parametres: " + urlParameters);
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
                 DadesVotacio.this.cancel(true);
                 //Toast.makeText(getApplicationContext(),"Error a l'enviar les respostes", Toast.LENGTH_SHORT).show();
             }
             int result = POST.excutePost(targetURL, urlParameters);
-            System.out.println("Resultat: " + result);
+            //System.out.println("Resultat: " + result);
         }
         /*for(int i=1; i<=10; i++) {
             tareaLarga();

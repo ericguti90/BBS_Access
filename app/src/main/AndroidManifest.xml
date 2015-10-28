@@ -38,6 +38,10 @@
         </activity>
         <activity android:name=".Presentation.ListVotaEvActivity" >
         </activity>
+        <activity android:name=".Presentation.ListAdminActivity" >
+        </activity>
+        <activity android:name=".Presentation.DetalleEventoAdminActivity" >
+        </activity>
     </application>
 
 </manifest>

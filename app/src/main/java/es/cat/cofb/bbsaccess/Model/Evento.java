@@ -17,6 +17,7 @@ public class Evento implements Serializable {
     private int numAss;
     private ArrayList<Votacion> votacions;
     private int idUsuari;
+    private int numAssAct;
 
     public ArrayList<Votacion> getVotacions() {
         return votacions;
@@ -39,6 +40,7 @@ public class Evento implements Serializable {
         this.inscrit = inscrit;
         this.votacions = new ArrayList<Votacion>();
         this.idUsuari = idUsuari;
+        this.numAssAct = 0;
     }
 
     public int getId() {
@@ -115,5 +117,13 @@ public class Evento implements Serializable {
 
     public void setIdUsuari(int idUsuari) {
         this.idUsuari = idUsuari;
+    }
+
+    public void setNumAssAct(int numAssAct) {
+        this.numAssAct = numAssAct;
+    }
+
+    public int getNumAssAct() {
+        return numAssAct;
     }
 }

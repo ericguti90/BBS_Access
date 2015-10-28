@@ -53,13 +53,13 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     private boolean esHistorico = false;
     //FragmentList frgListado;
     ImageView btnEvent, btnVotation, btnHistory, btnMenu;
-    String actual = "event";
+    String actual = "event", userNom;
     RecyclerView eventos;
     private LinearLayoutManager mLinearLayout;
     HttpURLConnection con;
     TextView txtError, textList;
     LinearLayout lyError;
-    private int user = 5;
+    public static int user = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,6 +137,9 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         //Asignamos el LinearLayoutManager al recycler:
         eventos.setLayoutManager(mLinearLayout);
 
+        Bundle bundle=getIntent().getExtras();
+        user = bundle.getInt("idUsuari");
+        userNom = bundle.getString("usuari");
         try {
             ConnectivityManager connMgr = (ConnectivityManager)
                     getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -166,9 +169,11 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                         if (esEvento) {
                             bundle.putInt("idEvento", position);
                             bundle.putInt("idUsuari", user);
-                            System.out.println("esHistorico? " + esHistorico);
+                            bundle.putString("usuari", userNom);
+                            //System.out.println("esHistorico? " + esHistorico);
                             bundle.putBoolean("esHistorico", esHistorico);
                         } else {
+                            bundle.putString("usuari", userNom);
                             bundle.putInt("idVotacion", position);
                             bundle.putString("feta", "VotacioNoFeta");
                             bundle.putInt("idUsuari", user);
@@ -205,6 +210,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                     setImgStatus(R.drawable.event_push, R.drawable.votation, R.drawable.history);
                     if(api.getEventos().size() == 0) {
                         eventos.setVisibility(View.GONE);
+                        txtError.setText("Encara no hi ha cap esdeveniment disponible");
                     }
                     else {
                         eventos.setVisibility(View.VISIBLE);
@@ -220,7 +226,10 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                     textList.setText("Votacions");
                     //frgListado.setList(datos);
                     setImgStatus(R.drawable.event, R.drawable.votation_push, R.drawable.history);
-                    if(api.getVotaciones().size() == 0) eventos.setVisibility(View.GONE);
+                    if(api.getVotaciones().size() == 0) {
+                        eventos.setVisibility(View.GONE);
+                        txtError.setText("Encara no hi ha cap votació disponible");
+                    }
                     else {
                         eventos.setVisibility(View.VISIBLE);
                         eventos.setAdapter(new VotacionAdapter(api.getVotaciones()));
@@ -235,7 +244,10 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                     textList.setText("Històrics");
                     //frgListado.setList(datos);
                     setImgStatus(R.drawable.event, R.drawable.votation, R.drawable.history_push);
-                    if(api.getHistorico().size() == 0) eventos.setVisibility(View.GONE);
+                    if(api.getHistorico().size() == 0) {
+                        eventos.setVisibility(View.GONE);
+                        txtError.setText("Encara no has accedit a cap esdeveniment");
+                    }
                     else {
                         eventos.setVisibility(View.VISIBLE);
                         eventos.setAdapter(new EventoAdapter(api.getHistorico()));

@@ -28,7 +28,7 @@ public class DetalleEventoActivity extends AppCompatActivity implements View.OnC
 	Button btnQR, btnNFC;
 	Resultado api;
 	Bundle bundle;
-	int id;
+	int id, idUsuari;
 	private NfcAdapter mNfcAdapter;
 	LinearLayout lyOK;
 	
@@ -60,6 +60,7 @@ public class DetalleEventoActivity extends AppCompatActivity implements View.OnC
 		//System.out.println(pos);
 		//api.getEventoPos(pos);
         api = ListActivity.api;
+		idUsuari = bundle.getInt("idUsuari");
 		if(bundle.getBoolean("esHistorico")) {
 			loadEvento(api.getHistoricoPos(bundle.getInt("idEvento")));
 		}
@@ -100,7 +101,7 @@ public class DetalleEventoActivity extends AppCompatActivity implements View.OnC
 					Bundle bundleQR = new Bundle();
 					Intent i = new Intent(getApplicationContext(), QRViewActivity.class);
 					bundleQR.putInt("idEvento", id);
-					bundleQR.putInt("idUsuari", bundle.getInt("idUsuari"));
+					bundleQR.putInt("idUsuari", idUsuari);
 					i.putExtras(bundleQR);
 					startActivity(i);
 				} else {
@@ -108,20 +109,22 @@ public class DetalleEventoActivity extends AppCompatActivity implements View.OnC
 					String urlParameters = null;
 					try {
 						urlParameters =
-								"usuari=" + URLEncoder.encode("egutierrezS", "UTF-8") +
+								"usuari=" + URLEncoder.encode(bundle.getString("usuari"), "UTF-8") +
 										"&assistit=" + URLEncoder.encode("false", "UTF-8") +
 										"&dataHora=" + URLEncoder.encode("0000-00-00 00:00:00", "UTF-8") +
 										"&delegat=" + URLEncoder.encode("false", "UTF-8");
+						System.out.println(urlParameters);
 					} catch (UnsupportedEncodingException e) {
 						e.printStackTrace();
 					}
 					int result = POST.excutePost(targetURL, urlParameters);
-					if(result == 201) {
+					if(result == 200) {
 						Evento e = api.getEventoPos(bundle.getInt("idEvento"));
 						e.setInscrit(true);
 						btnQR.setText("Accedir mitjançant QR");
 						if (mNfcAdapter != null) btnNFC.setVisibility(View.VISIBLE);
 						lyOK.setVisibility(View.VISIBLE);
+						if(idUsuari<0)actualitzar_id(POST.response);
 					}
 				}
 
@@ -133,13 +136,19 @@ public class DetalleEventoActivity extends AppCompatActivity implements View.OnC
 				Bundle bundleV = new Bundle();
 				Intent i = new Intent(getApplicationContext(), ListVotaEvActivity.class);
 				bundleV.putInt("idEvento", bundle.getInt("idEvento"));
-				bundleV.putInt("idUsuari", bundle.getInt("idUsuari"));
-				System.out.println("esHistorico? " + bundle.getBoolean("esHistorico"));
+				bundleV.putInt("idUsuari", idUsuari);
+				//System.out.println("esHistorico? " + bundle.getBoolean("esHistorico"));
 				bundleV.putBoolean("esHistorico", bundle.getBoolean("esHistorico"));
 				i.putExtras(bundleV);
 				startActivity(i);
 				break;
 
 		}
+	}
+
+	private void actualitzar_id(String response) {
+		response = String.valueOf(response).trim();
+		idUsuari = Integer.parseInt(response);
+		ListActivity.user = idUsuari;
 	}
 }

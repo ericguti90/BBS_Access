@@ -86,7 +86,7 @@ public class JSONCommentsParser {
 
     private String readObjectEsd(JsonReader reader, boolean assistit, boolean inscrit, int idUsuari) throws IOException {
         String titol = null, dataHora = null, lloc = null, aux;
-        int id = 0, numAss = 0;
+        int id = 0, numAss = 0, numAssAct = 0;
         boolean inscripcio = false, presencial = false;
         reader.beginObject();
         while (reader.hasNext()) {
@@ -106,11 +106,13 @@ public class JSONCommentsParser {
                 else presencial = true;
             }
             else if(name.equals("numAss")) numAss = Integer.parseInt(reader.nextString());
+            else if(name.equals("numAssAct")) numAssAct = Integer.parseInt(reader.nextString());
             else reader.skipValue();
         }
         reader.endObject();
         if(inscrit || !result.existeEvento(id)) {
             Evento e = new Evento(id, titol, dataHora, lloc, inscripcio, presencial, numAss, inscrit, idUsuari);
+            if(numAssAct != 0) e.setNumAssAct(numAssAct);
             if (assistit) {
                 result.addHistorico(e);
             } else result.addEvento(e);
