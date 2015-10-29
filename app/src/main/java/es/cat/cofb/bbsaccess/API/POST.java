@@ -67,7 +67,7 @@ public class POST {
             }
             rd.close();
             response = responseAux.toString();
-            System.out.println("response: " + response);
+            //System.out.println("response: " + response);
             //if (statusCode != 201) {
                 //System.out.println("status: " + statusCode);
             //}

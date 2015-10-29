@@ -14,6 +14,7 @@ public class Votacion {
     private String feta;
     private ArrayList<Pregunta> preguntes;
     private int idUsuari;
+    private int idEvento;
 
     public ArrayList<Pregunta> getPreguntes() {
         return preguntes;
@@ -23,7 +24,7 @@ public class Votacion {
         this.preguntes = preguntes;
     }
 
-    public Votacion(int id, String titol, String dataHoraIni, String dataHoraFin, String evento, String feta, int idUsuari) {
+    public Votacion(int id, String titol, String dataHoraIni, String dataHoraFin, String evento, int idEvento, String feta, int idUsuari) {
         this.id = id;
         this.titol = titol;
         this.dataHoraIni = dataHoraIni;
@@ -32,6 +33,7 @@ public class Votacion {
         this.feta = feta;
         this.preguntes = new ArrayList<Pregunta>();
         this.idUsuari = idUsuari;
+        this.idEvento = idEvento;
     }
 
     public int getId() {
@@ -92,5 +94,13 @@ public class Votacion {
 
     public void setIdUsuari(int idUsuari) {
         this.idUsuari = idUsuari;
+    }
+
+    public int getIdEvento() {
+        return idEvento;
+    }
+
+    public void setIdEvento(int idEvento) {
+        this.idEvento = idEvento;
     }
 }

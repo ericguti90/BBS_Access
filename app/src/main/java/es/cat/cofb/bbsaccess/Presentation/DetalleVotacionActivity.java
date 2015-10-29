@@ -23,6 +23,7 @@ public class DetalleVotacionActivity extends AppCompatActivity implements View.O
     Button btn;
     Resultado api;
     int idV, idUsuari;
+    String usuari;
     LinearLayout lyOKVota;
 
     @Override
@@ -42,6 +43,7 @@ public class DetalleVotacionActivity extends AppCompatActivity implements View.O
         //cargamos datos
         Bundle bundle=getIntent().getExtras();
         idV = bundle.getInt("idVotacion");
+        usuari = bundle.getString("usuari");
         if(idV == -1) {
             Evento e = api.getHistoricoId(bundle.getInt("idEvento"));
             loadVotacion(e.getVotacions().get(bundle.getInt("position")));
@@ -54,7 +56,6 @@ public class DetalleVotacionActivity extends AppCompatActivity implements View.O
 
     private void loadVotacion(Votacion votacion) {
         idUsuari = votacion.getIdUsuari();
-        System.out.println("usuari: " + idUsuari);
         lyOKVota.setVisibility(View.GONE);
         tituloVotacion.setText(votacion.getTitol());
         evento.setText(votacion.getEvento());
@@ -99,6 +100,7 @@ public class DetalleVotacionActivity extends AppCompatActivity implements View.O
                 bundle.putInt("idVotacion", idV);
                 bundle.putInt("numPreg",1);
                 bundle.putInt("idUsuari",idUsuari);
+                bundle.putString("usuari", usuari);
                 i.putExtras(bundle);
                 startActivityForResult(i,1);
                 break;

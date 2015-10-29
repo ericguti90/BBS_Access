@@ -21,6 +21,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import es.cat.cofb.bbsaccess.API.POST;
+import es.cat.cofb.bbsaccess.AsynTask.CrearAssistent;
 import es.cat.cofb.bbsaccess.AsynTask.DadesVotacio;
 import es.cat.cofb.bbsaccess.Model.Pregunta;
 import es.cat.cofb.bbsaccess.Model.Resultado;
@@ -36,11 +37,14 @@ public class DetallePreguntaActivity extends AppCompatActivity implements View.O
     Button btn;
     ViewGroup vg;
     Resultado api;
-    int idV, numP, idUsuari;
+    int idV, numP;
+    public int idUsuari;
+    String usuari;
     public Votacion v;
     String respostaRB = "";
     public ProgressDialog pDialog;
     DadesVotacio dv;
+    CrearAssistent ca;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +64,7 @@ public class DetallePreguntaActivity extends AppCompatActivity implements View.O
         idV = bundle.getInt("idVotacion");
         numP = bundle.getInt("numPreg");
         idUsuari = bundle.getInt("idUsuari");
-        System.out.println("usuariP:"+idUsuari);
+        usuari = bundle.getString("usuari");
         v = api.getVotacionPos(idV);
         loadPregunta();
     }
@@ -73,7 +77,6 @@ public class DetallePreguntaActivity extends AppCompatActivity implements View.O
         pregunta.setText(v.getPreguntes().get(numP-1).getTitol());
         if(numP == total) btn.setText("Finalitzar");
         else btn.setText("Continuar");
-        System.out.println("opcions:   " + v.getPreguntes().get(numP - 1).getOpcions().size());
         if(v.getPreguntes().get(numP-1).getOpcions().size() == 0) vg.setVisibility(View.GONE);
         else loadOpcions(v.getPreguntes().get(numP-1).getOpcions());
     }
@@ -127,6 +130,7 @@ public class DetallePreguntaActivity extends AppCompatActivity implements View.O
                     sent.putInt("idVotacion",idV);
                     sent.putInt("numPreg", numP + 1);
                     sent.putInt("idUsuari", idUsuari);
+                    sent.putString("usuari", usuari);
                     Intent i = new Intent(getApplicationContext(), DetallePreguntaActivity.class);
                     i.putExtras(sent);
                     startActivityForResult(i, 1);
@@ -143,6 +147,11 @@ public class DetallePreguntaActivity extends AppCompatActivity implements View.O
     }
 
     private void enviarRespostes() {
+        if(idUsuari == -2) crearUsuari();
+        else sentRespostes();
+    }
+
+    public void sentRespostes() {
         pDialog = new ProgressDialog(this);
         pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         pDialog.setMessage("Enviant dades...");
@@ -150,33 +159,18 @@ public class DetallePreguntaActivity extends AppCompatActivity implements View.O
         //pDialog.setMax(100);
         dv = new DadesVotacio(this);
         dv.execute(String.valueOf(idUsuari));
+    }
 
-
-
-/*
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-        ArrayList<Pregunta> p = v.getPreguntes();
-        for(int i = 0; i < p.size() ; ++i) {
-            System.out.println("i: " + i + " ;idV:" + v.getId() + " ;pregunta:" + p.get(i).getId() + " ;idU:" + String.valueOf(idUsuari) + " ;resposta:" + p.get(i).getResposta() + " ;data:"+POST.getDateTime());
-            String targetURL="http://xarxacd.cofb.net/app_accesscontrol/public/votacions/"+v.getId()+"/preguntes/"+ p.get(i).getId() +"/respostes";
-            System.out.println("url:" +targetURL);
-            String urlParameters = null;
-            try {
-                urlParameters =
-                        "idUsuari=" + URLEncoder.encode(String.valueOf(idUsuari), "UTF-8") +
-                                "&resposta=" + URLEncoder.encode(p.get(i).getResposta(), "UTF-8") +
-                                "&dataHora=" + URLEncoder.encode(POST.getDateTime(), "UTF-8");
-                System.out.println("parametres: " + urlParameters);
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-                Toast.makeText(getApplicationContext(),"Error a l'enviar les respostes", Toast.LENGTH_SHORT).show();
-            }
-            int result = POST.excutePost(targetURL, urlParameters);
-            System.out.println("Resultat: " + result);
-        }
-        v.setFeta("votacioFeta");
-        Toast.makeText(getApplicationContext(),"Enviat", Toast.LENGTH_SHORT).show();*/
+    private void crearUsuari() {
+        pDialog = new ProgressDialog(this);
+        pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        pDialog.setMessage("Enviant dades...");
+        pDialog.setCancelable(false);
+        pDialog.setIndeterminate(true);
+        pDialog.setProgressNumberFormat(null);
+        pDialog.setProgressPercentFormat(null);
+        ca = new CrearAssistent(this);
+        ca.execute(String.valueOf(v.getIdEvento()), usuari, String.valueOf(v.getId())); //falta nombre de usuario);
     }
 
     @Override
