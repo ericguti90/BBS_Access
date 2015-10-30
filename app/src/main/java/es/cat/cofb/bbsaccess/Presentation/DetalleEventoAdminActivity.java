@@ -27,7 +27,7 @@ import es.cat.cofb.bbsaccess.R;
  */
 public class DetalleEventoAdminActivity extends AppCompatActivity implements View.OnClickListener{
 
-    TextView dataHora, lloc, inscripcio, presencial, numAss, tituloEvento;
+    TextView dataHora, lloc, inscripcio, numAss, tituloEvento;
     Button btnQR, btnNFC;
     Resultado api;
     Bundle bundle;
@@ -46,7 +46,6 @@ public class DetalleEventoAdminActivity extends AppCompatActivity implements Vie
         dataHora = (TextView) findViewById(R.id.textView12);
         lloc = (TextView) findViewById(R.id.textView13);
         inscripcio = (TextView) findViewById(R.id.textView14);
-        presencial = (TextView) findViewById(R.id.textView15);
         numAss = (TextView) findViewById(R.id.textView16);
         tituloEvento = (TextView) findViewById(R.id.tituloEvento);
         btnNFC = (Button) findViewById(R.id.buttonValidarNFC);
@@ -76,8 +75,6 @@ public class DetalleEventoAdminActivity extends AppCompatActivity implements Vie
         else lloc.setText(evento.getLloc());
         if(evento.isInscripcio()) inscripcio.setText("Sí");
         else inscripcio.setText("No");
-        if(evento.isPresencial()) presencial.setText("Sí");
-        else presencial.setText("No");
         numAss.setText(String.valueOf(evento.getNumAssAct()) + "/" + String.valueOf(evento.getNumAss()));
         if (mNfcAdapter == null) btnNFC.setVisibility(View.GONE);
     }

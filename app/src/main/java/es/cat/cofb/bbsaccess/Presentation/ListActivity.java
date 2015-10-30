@@ -54,7 +54,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     //FragmentList frgListado;
     ImageView btnEvent, btnVotation, btnHistory, btnMenu;
     String actual = "event", userNom;
-    RecyclerView eventos;
+    static RecyclerView eventos;
     private LinearLayoutManager mLinearLayout;
     HttpURLConnection con;
     TextView txtError, textList;

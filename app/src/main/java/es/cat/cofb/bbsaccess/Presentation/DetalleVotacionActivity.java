@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import es.cat.cofb.bbsaccess.Adapters.VotacionAdapter;
 import es.cat.cofb.bbsaccess.Model.Evento;
 import es.cat.cofb.bbsaccess.Model.Resultado;
 import es.cat.cofb.bbsaccess.Model.Votacion;
@@ -114,6 +115,9 @@ public class DetalleVotacionActivity extends AppCompatActivity implements View.O
             lyOKVota.setVisibility(View.VISIBLE);
             btn.setVisibility(View.GONE);
             VotacioFeta.setText("Si");
+            api.deleteVotacio(idV);
+            if(api.getVotaciones().size() == 0) ListActivity.eventos.setVisibility(View.GONE);
+            else ListActivity.eventos.setAdapter(new VotacionAdapter(api.getVotaciones()));
         }
     }
 }

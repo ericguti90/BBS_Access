@@ -11,49 +11,35 @@ import es.cat.cofb.bbsaccess.API.POST;
 import es.cat.cofb.bbsaccess.Presentation.DetallePreguntaActivity;
 
 /**
- * Created by egutierrez on 29/10/2015.
+ * Created by egutierrez on 30/10/2015.
  */
-public class CrearAssistent extends AsyncTask<String, Integer, Boolean> {
+public class ValidarAsistenciaVotacion extends AsyncTask<String, Integer, Boolean> {
 
     DetallePreguntaActivity DPActivity;
-    String idUsuari;
+    String total;
 
-    public CrearAssistent(DetallePreguntaActivity detallePreguntaActivity) {
+    public ValidarAsistenciaVotacion(DetallePreguntaActivity detallePreguntaActivity) {
         DPActivity = detallePreguntaActivity;
     }
 
     @Override
     protected Boolean doInBackground(String... params) {
-        String targetURL = "http://xarxacd.cofb.net/app_accesscontrol/public/esdeveniments/"+params[0]+"/assistents";
+        String targetURL = "http://xarxacd.cofb.net/app_accesscontrol/public/api/validar-asistencia";
         String urlParameters = null;
         try {
             urlParameters =
                     "usuari=" + URLEncoder.encode(params[1]/*usuari*/, "UTF-8") +
-                    "&assistit=" + URLEncoder.encode("true", "UTF-8") +
-                    "&dataHora=" + URLEncoder.encode(POST.getDateTime(), "UTF-8") +
-                    "&delegat=" + URLEncoder.encode("false", "UTF-8");
+                            "&esdeveniment_id=" + URLEncoder.encode(params[0], "UTF-8") +
+                            "&dataHora=" + URLEncoder.encode(POST.getDateTime(), "UTF-8");
             //System.out.println("parametres: " + urlParameters);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-            CrearAssistent.this.cancel(true);
+            ValidarAsistenciaVotacion.this.cancel(true);
             return false;
         }
         int result = POST.excutePost(targetURL, urlParameters);
-        idUsuari = POST.response.trim();
-
-        targetURL = "http://xarxacd.cofb.net/app_accesscontrol/public/api/vota-ass";
-        urlParameters = null;
-        try {
-            urlParameters =
-                    "assistent_id=" + URLEncoder.encode(idUsuari/*usuari*/, "UTF-8") +
-                    "&votacio_id=" + URLEncoder.encode(params[2], "UTF-8");
-            //System.out.println("parametres: " + urlParameters);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            CrearAssistent.this.cancel(true);
-            return false;
-        }
-        POST.excutePost(targetURL, urlParameters);
+        total = POST.response.trim();
+        //System.out.println("totaaaaaaaaaaaaaal:"+ total);
         return true;
     }
 
@@ -72,13 +58,12 @@ public class CrearAssistent extends AsyncTask<String, Integer, Boolean> {
     protected void onPostExecute(Boolean result) {
         DPActivity.pDialog.dismiss();
         if (result) {
-            DPActivity.idUsuari = Integer.valueOf(idUsuari);
             DPActivity.sentRespostes();
         }
     }
 
     @Override
     protected void onCancelled() {
-        Toast.makeText(DPActivity, "Error: no s'ha creat l'assistent!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(DPActivity, "Error: no es pot validar", Toast.LENGTH_SHORT).show();
     }
 }

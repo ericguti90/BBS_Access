@@ -131,4 +131,8 @@ public class Resultado {
         }
         return false;
     }
+
+    public void deleteVotacio(int id) {
+        votaciones.remove(id);
+    }
 }

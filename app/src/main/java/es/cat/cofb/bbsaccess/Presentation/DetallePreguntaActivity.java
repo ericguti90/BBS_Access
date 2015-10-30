@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,17 +12,13 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 
-import es.cat.cofb.bbsaccess.API.POST;
 import es.cat.cofb.bbsaccess.AsynTask.CrearAssistent;
 import es.cat.cofb.bbsaccess.AsynTask.DadesVotacio;
-import es.cat.cofb.bbsaccess.Model.Pregunta;
+import es.cat.cofb.bbsaccess.AsynTask.ValidarAsistenciaVotacion;
 import es.cat.cofb.bbsaccess.Model.Resultado;
 import es.cat.cofb.bbsaccess.Model.Votacion;
 import es.cat.cofb.bbsaccess.R;
@@ -45,6 +40,7 @@ public class DetallePreguntaActivity extends AppCompatActivity implements View.O
     public ProgressDialog pDialog;
     DadesVotacio dv;
     CrearAssistent ca;
+    ValidarAsistenciaVotacion va;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,7 +144,19 @@ public class DetallePreguntaActivity extends AppCompatActivity implements View.O
 
     private void enviarRespostes() {
         if(idUsuari == -2) crearUsuari();
-        else sentRespostes();
+        else validarAsistencia();
+    }
+
+    private void validarAsistencia() {
+        pDialog = new ProgressDialog(this);
+        pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        pDialog.setMessage("Enviant dades...");
+        pDialog.setCancelable(false);
+        pDialog.setIndeterminate(true);
+        pDialog.setProgressNumberFormat(null);
+        pDialog.setProgressPercentFormat(null);
+        va = new ValidarAsistenciaVotacion(this);
+        va.execute(String.valueOf(v.getIdEvento()), usuari);
     }
 
     public void sentRespostes() {
