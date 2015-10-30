@@ -159,9 +159,11 @@ public class JSONCommentsParser {
             else reader.skipValue();
         }
         reader.endObject();
+        boolean votaFeta = result.isHistoricoAsistido(evento.getTitol(), titol);
+        if(votaFeta) feta = "votacioFeta";
         Votacion v = new Votacion(id, titol, dataHoraIni, dataHoraFin, evento.getTitol(), evento.getId(),feta, idUsuari);
         v.setPreguntes(preg);
-        if(feta.equals("votacioNoFeta") && (assistit || !evento.isPresencial())) result.addVotacion(v);
+        if(feta.equals("votacioNoFeta") && (assistit || !evento.isPresencial()) && !votaFeta) result.addVotacion(v);
         result.addVotacionEvento(evento.getTitol(), v, assistit);
     }
 

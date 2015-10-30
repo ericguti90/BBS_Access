@@ -116,4 +116,19 @@ public class Resultado {
         return -1;
     }
 
+    public boolean isHistoricoAsistido (String evento, String vota) {
+        for(int i = 0; i < historico.size(); ++i){
+            if(historico.get(i).getTitol().equals(evento)) {
+                ArrayList<Votacion> aux = historico.get(i).getVotacions();
+                for(int j = 0; j < aux.size(); ++j) {
+                    if(aux.get(j).getTitol().equals(vota)) {
+                        if(aux.get(j).getFeta().equals("votacioFeta")) return true;
+                        else return false;
+                    }
+                }
+                return false;
+            }
+        }
+        return false;
+    }
 }
