@@ -279,7 +279,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="pot accedir a l&apos;esdeveniment"
-                android:id="@+id/textView30"
+                android:id="@+id/textOK"
                 android:textColor="#04918a"
                 android:layout_marginTop="2dp" />
         </LinearLayout>
@@ -323,7 +323,7 @@
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="No pot accedir a l'esdeveniment"
-                android:id="@+id/textView31"
+                android:id="@+id/textKO"
                 android:textColor="#934501" />
         </LinearLayout>
 

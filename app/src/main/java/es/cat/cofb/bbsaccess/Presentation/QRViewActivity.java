@@ -26,7 +26,7 @@ public class QRViewActivity extends AppCompatActivity {
 
     public void mostrarQR(){
         Bundle bundle=getIntent().getExtras();
-        String qrData = bundle.getInt("idEvento") + ";" + bundle.getInt("idUsuari");
+        String qrData = bundle.getInt("idEvento") + ";" + bundle.getString("usuari") + "@cofb.net";
         int qrCodeDimention = 500;
 
         QRCodeEncoder qrCodeEncoder = new QRCodeEncoder(qrData, null,

@@ -101,7 +101,7 @@ public class DetalleEventoActivity extends AppCompatActivity implements View.OnC
 					Bundle bundleQR = new Bundle();
 					Intent i = new Intent(getApplicationContext(), QRViewActivity.class);
 					bundleQR.putInt("idEvento", id);
-					bundleQR.putInt("idUsuari", idUsuari);
+					bundleQR.putString("usuari", bundle.getString("usuari"));
 					i.putExtras(bundleQR);
 					startActivity(i);
 				} else {
@@ -113,7 +113,7 @@ public class DetalleEventoActivity extends AppCompatActivity implements View.OnC
 										"&assistit=" + URLEncoder.encode("false", "UTF-8") +
 										"&dataHora=" + URLEncoder.encode("0000-00-00 00:00:00", "UTF-8") +
 										"&delegat=" + URLEncoder.encode("false", "UTF-8");
-						System.out.println(urlParameters);
+						//System.out.println(urlParameters);
 					} catch (UnsupportedEncodingException e) {
 						e.printStackTrace();
 					}

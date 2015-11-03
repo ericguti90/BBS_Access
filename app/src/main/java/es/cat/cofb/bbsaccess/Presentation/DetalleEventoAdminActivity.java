@@ -1,5 +1,6 @@
 package es.cat.cofb.bbsaccess.Presentation;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
@@ -8,14 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
-import es.cat.cofb.bbsaccess.API.POST;
+import es.cat.cofb.bbsaccess.AsynTask.ValidarAsistencia;
 import es.cat.cofb.bbsaccess.Model.Evento;
 import es.cat.cofb.bbsaccess.Model.Resultado;
 import es.cat.cofb.bbsaccess.QR.IntentIntegrator;
@@ -27,13 +24,16 @@ import es.cat.cofb.bbsaccess.R;
  */
 public class DetalleEventoAdminActivity extends AppCompatActivity implements View.OnClickListener{
 
-    TextView dataHora, lloc, inscripcio, numAss, tituloEvento;
-    Button btnQR, btnNFC;
+    TextView dataHora, lloc, inscripcio, numAss, tituloEvento, textKO, textOK;
+    Button btnQR, btnNFC, btnMANUAL;
     Resultado api;
     Bundle bundle;
-    int id, idUsuari;
+    int id;
+    String numAssTotal;
     private NfcAdapter mNfcAdapter;
     LinearLayout lyOK, lyKO;
+    public ProgressDialog pDialog;
+    ValidarAsistencia va;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +48,14 @@ public class DetalleEventoAdminActivity extends AppCompatActivity implements Vie
         inscripcio = (TextView) findViewById(R.id.textView14);
         numAss = (TextView) findViewById(R.id.textView16);
         tituloEvento = (TextView) findViewById(R.id.tituloEvento);
+        textKO = (TextView) findViewById(R.id.textKO);
+        textOK = (TextView) findViewById(R.id.textOK);
         btnNFC = (Button) findViewById(R.id.buttonValidarNFC);
         btnQR = (Button) findViewById(R.id.buttonValidarQR);
+        btnMANUAL = (Button) findViewById(R.id.buttonValidarManual);
         btnQR.setOnClickListener(this);
         btnNFC.setOnClickListener(this);
+        btnMANUAL.setOnClickListener(this);
         lyOK = (LinearLayout) findViewById(R.id.lytGreenEvento);
         lyKO = (LinearLayout) findViewById(R.id.lytRedEvento);
 
@@ -75,27 +79,79 @@ public class DetalleEventoAdminActivity extends AppCompatActivity implements Vie
         else lloc.setText(evento.getLloc());
         if(evento.isInscripcio()) inscripcio.setText("Sí");
         else inscripcio.setText("No");
-        numAss.setText(String.valueOf(evento.getNumAssAct()) + "/" + String.valueOf(evento.getNumAss()));
+        numAssTotal = String.valueOf(evento.getNumAss());
+        numAss.setText(String.valueOf(evento.getNumAssAct()) + "/" + numAssTotal);
         if (mNfcAdapter == null) btnNFC.setVisibility(View.GONE);
     }
 
     @Override
     public void onClick(View v) {
+        lyOK.setVisibility(View.GONE);
+        lyKO.setVisibility(View.GONE);
         switch (v.getId()) {
             case R.id.buttonValidarQR:
                 IntentIntegrator integrator = new IntentIntegrator(DetalleEventoAdminActivity.this);
                 integrator.initiateScan();
+                break;
+            case R.id.buttonValidarNFC:
+                break;
+            case R.id.buttonValidarManual:
                 break;
         }
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-        if (scanResult != null) {
-            // handle scan result
-            Toast.makeText(getApplicationContext(), scanResult.getContents(), Toast.LENGTH_SHORT).show();
+        //System.out.println("requestCode: " + requestCode);
+        if(requestCode == 49374) {
+            IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+            if (scanResult != null) {
+                // handle scan result
+                //Toast.makeText(getApplicationContext(), scanResult.getContents(), Toast.LENGTH_SHORT).show();
+                if(id == Integer.valueOf(scanResult.getContents().toString().split(";")[0])) {
+                    validarAcces(scanResult.getContents().toString().split(";")[0],scanResult.getContents().toString().split(";")[1]);
+                }
+                else Toast.makeText(getApplicationContext(), "L'entrada no pertany a aquest esdeveniment", Toast.LENGTH_SHORT).show();
+            }
+        }// else continue with any other code you need in the method
+        else {
+
         }
-        // else continue with any other code you need in the method
+
+
+    }
+
+    private void validarAcces(String idV, String correu) {
+        pDialog = new ProgressDialog(this);
+        pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        pDialog.setMessage("Validant accès...");
+        pDialog.setCancelable(false);
+        pDialog.setIndeterminate(true);
+        pDialog.setProgressNumberFormat(null);
+        pDialog.setProgressPercentFormat(null);
+        va = new ValidarAsistencia(this);
+        va.execute(idV, correu);
+
+    }
+
+    public void respostaPOST(Integer resp) {
+        if(resp == -1) {
+            lyOK.setVisibility(View.GONE);
+            lyKO.setVisibility(View.VISIBLE);
+            textKO.setText("L'assistent no s'ha apuntat a l'esdeveniment");
+            //Toast.makeText(getApplicationContext(), "L'assistent no s'ha apuntat a l'esdeveniment", Toast.LENGTH_SHORT).show();
+        }
+        else if(resp == 0){
+            lyOK.setVisibility(View.GONE);
+            lyKO.setVisibility(View.VISIBLE);
+            textKO.setText("L'assistent ja ha accedit a l'esdeveniment");
+            //Toast.makeText(getApplicationContext(), "L'assistent ja ha accedit", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            numAss.setText(resp + "/" + numAssTotal);
+            lyOK.setVisibility(View.VISIBLE);
+            lyKO.setVisibility(View.GONE);
+            textOK.setText("pot accedir a l'esdeveniment");
+        }
     }
 }
