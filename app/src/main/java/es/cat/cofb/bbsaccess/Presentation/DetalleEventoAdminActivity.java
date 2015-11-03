@@ -5,14 +5,21 @@ import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import es.cat.cofb.bbsaccess.AsynTask.ObtenirCorreu;
 import es.cat.cofb.bbsaccess.AsynTask.ValidarAsistencia;
+import es.cat.cofb.bbsaccess.Listeners.DialogValidarManual;
+import es.cat.cofb.bbsaccess.Listeners.DialogValidarManual2;
 import es.cat.cofb.bbsaccess.Model.Evento;
 import es.cat.cofb.bbsaccess.Model.Resultado;
 import es.cat.cofb.bbsaccess.QR.IntentIntegrator;
@@ -22,7 +29,7 @@ import es.cat.cofb.bbsaccess.R;
 /**
  * Created by egutierrez on 28/10/2015.
  */
-public class DetalleEventoAdminActivity extends AppCompatActivity implements View.OnClickListener{
+public class DetalleEventoAdminActivity extends FragmentActivity implements View.OnClickListener, DialogValidarManual.DialogListener, DialogValidarManual2.DialogListener2{
 
     TextView dataHora, lloc, inscripcio, numAss, tituloEvento, textKO, textOK;
     Button btnQR, btnNFC, btnMANUAL;
@@ -34,6 +41,7 @@ public class DetalleEventoAdminActivity extends AppCompatActivity implements Vie
     LinearLayout lyOK, lyKO;
     public ProgressDialog pDialog;
     ValidarAsistencia va;
+    ObtenirCorreu oc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +104,9 @@ public class DetalleEventoAdminActivity extends AppCompatActivity implements Vie
             case R.id.buttonValidarNFC:
                 break;
             case R.id.buttonValidarManual:
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                DialogValidarManual dialogo = new DialogValidarManual();
+                dialogo.show(fragmentManager, "tagAlerta");
                 break;
         }
     }
@@ -105,7 +116,7 @@ public class DetalleEventoAdminActivity extends AppCompatActivity implements Vie
         //System.out.println("requestCode: " + requestCode);
         if(requestCode == 49374) {
             IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-            if (scanResult != null) {
+            if (scanResult.getContents() != null) {
                 // handle scan result
                 //Toast.makeText(getApplicationContext(), scanResult.getContents(), Toast.LENGTH_SHORT).show();
                 if(id == Integer.valueOf(scanResult.getContents().toString().split(";")[0])) {
@@ -153,5 +164,40 @@ public class DetalleEventoAdminActivity extends AppCompatActivity implements Vie
             lyKO.setVisibility(View.GONE);
             textOK.setText("pot accedir a l'esdeveniment");
         }
+    }
+
+    public void onDialogValidar(String nif, String numF){
+        //Toast.makeText(getApplicationContext(),"validar", Toast.LENGTH_SHORT).show();
+        pDialog = new ProgressDialog(this);
+        pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        pDialog.setMessage("Enviant dades...");
+        pDialog.setCancelable(false);
+        pDialog.setIndeterminate(true);
+        pDialog.setProgressNumberFormat(null);
+        pDialog.setProgressPercentFormat(null);
+        oc = new ObtenirCorreu(this);
+        oc.execute(nif, numF);
+    }
+
+    public void respostaObtenirCorreu(String dades) {
+        try {
+            JSONObject jsonObj = new JSONObject(dades);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            DialogValidarManual2 dialogo = new DialogValidarManual2();
+            Bundle bundle = new Bundle();
+            bundle.putString("firstName",jsonObj.get("firstName").toString());
+            bundle.putString("middleName",jsonObj.get("middleName").toString());
+            bundle.putString("lastName",jsonObj.get("lastName").toString());
+            bundle.putString("emailAddress",jsonObj.get("emailAddress").toString());
+            dialogo.setArguments(bundle);
+            dialogo.show(fragmentManager, "tagAlerta");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onDialogValidar2(String correu) {
+        validarAcces(String.valueOf(id),correu);
     }
 }
