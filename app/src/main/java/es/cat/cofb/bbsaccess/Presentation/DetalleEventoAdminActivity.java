@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +23,7 @@ import es.cat.cofb.bbsaccess.AsynTask.ObtenirCorreu;
 import es.cat.cofb.bbsaccess.AsynTask.validarAsistencia;
 import es.cat.cofb.bbsaccess.Listeners.DialogValidarManual;
 import es.cat.cofb.bbsaccess.Listeners.DialogValidarManual2;
+import es.cat.cofb.bbsaccess.Listeners.MenuListener;
 import es.cat.cofb.bbsaccess.Model.Evento;
 import es.cat.cofb.bbsaccess.Model.Resultado;
 import es.cat.cofb.bbsaccess.QR.IntentIntegrator;
@@ -42,6 +46,8 @@ public class DetalleEventoAdminActivity extends FragmentActivity implements View
     public ProgressDialog pDialog;
     validarAsistencia va;
     ObtenirCorreu oc;
+    private DrawerLayout drawerLayout;
+    private NavigationView navView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +72,11 @@ public class DetalleEventoAdminActivity extends FragmentActivity implements View
         btnMANUAL.setOnClickListener(this);
         lyOK = (LinearLayout) findViewById(R.id.lytGreenEvento);
         lyKO = (LinearLayout) findViewById(R.id.lytRedEvento);
+        FrameLayout btnMenu = (FrameLayout) findViewById(R.id.menuBtn);
+        btnMenu.setOnClickListener(this);
+        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        navView = (NavigationView)findViewById(R.id.navview);
+        navView.setNavigationItemSelectedListener(new MenuListener(getApplicationContext(), drawerLayout));
 
         //cargamos datos
         bundle=getIntent().getExtras();
@@ -107,6 +118,9 @@ public class DetalleEventoAdminActivity extends FragmentActivity implements View
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 DialogValidarManual dialogo = new DialogValidarManual();
                 dialogo.show(fragmentManager, "tagAlerta");
+                break;
+            case R.id.menuBtn:
+                drawerLayout.openDrawer(navView);
                 break;
         }
     }

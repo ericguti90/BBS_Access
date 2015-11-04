@@ -1,0 +1,17 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<android.support.design.widget.NavigationView
+    android:id="@+id/navview"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:layout_gravity="start"
+    app:headerLayout="@layout/header_navview"
+    app:menu="@menu/menu_navview"
+    android:background="#007872"
+    app:itemIconTint="#4dc9e4"
+    app:itemTextColor="#ffffff"
+    app:itemBackground="@color/MENU1"
+    android:theme="@style/NavigationDrawerStyle"
+    />
+</merge>

@@ -7,10 +7,13 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 
@@ -22,6 +25,7 @@ import java.net.URL;
 
 import es.cat.cofb.bbsaccess.API.JSONCommentsParser;
 import es.cat.cofb.bbsaccess.Adapters.EventoAdapter;
+import es.cat.cofb.bbsaccess.Listeners.MenuListener;
 import es.cat.cofb.bbsaccess.Listeners.RecyclerItemClickListener;
 import es.cat.cofb.bbsaccess.Model.Resultado;
 import es.cat.cofb.bbsaccess.R;
@@ -29,12 +33,15 @@ import es.cat.cofb.bbsaccess.R;
 /**
  * Created by egutierrez on 28/10/2015.
  */
-public class ListAdminActivity extends AppCompatActivity {
+public class ListAdminActivity extends AppCompatActivity implements View.OnClickListener{
 
     public static Resultado api;
     HttpURLConnection con;
     RecyclerView eventos;
     private ProgressDialog pDialog;
+    FrameLayout btnMenu;
+    private DrawerLayout drawerLayout;
+    private NavigationView navView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +49,13 @@ public class ListAdminActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_admin);
         api = new Resultado();
         eventos = (RecyclerView) findViewById(R.id.LstListadoAdmin);
+        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        navView = (NavigationView)findViewById(R.id.navview);
+        navView.setNavigationItemSelectedListener(new MenuListener(getApplicationContext(), drawerLayout));
         LinearLayoutManager mLinearLayout = new LinearLayoutManager(this);
         eventos.setLayoutManager(mLinearLayout);
+        btnMenu = (FrameLayout) findViewById(R.id.menuBtn);
+        btnMenu.setOnClickListener(this);
         try {
             ConnectivityManager connMgr = (ConnectivityManager)
                     getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -81,6 +93,15 @@ public class ListAdminActivity extends AppCompatActivity {
                     }
                 })
         );
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.menuBtn:
+                drawerLayout.openDrawer(navView);
+                break;
+        }
     }
 
 

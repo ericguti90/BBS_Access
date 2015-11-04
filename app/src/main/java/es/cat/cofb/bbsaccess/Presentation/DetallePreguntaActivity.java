@@ -4,11 +4,14 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -19,6 +22,7 @@ import java.util.ArrayList;
 import es.cat.cofb.bbsaccess.AsynTask.CrearAssistent;
 import es.cat.cofb.bbsaccess.AsynTask.DadesVotacio;
 import es.cat.cofb.bbsaccess.AsynTask.ValidarAsistenciaVotacion;
+import es.cat.cofb.bbsaccess.Listeners.MenuListener;
 import es.cat.cofb.bbsaccess.Model.Resultado;
 import es.cat.cofb.bbsaccess.Model.Votacion;
 import es.cat.cofb.bbsaccess.R;
@@ -41,6 +45,8 @@ public class DetallePreguntaActivity extends AppCompatActivity implements View.O
     DadesVotacio dv;
     CrearAssistent ca;
     ValidarAsistenciaVotacion va;
+    NavigationView navView;
+    DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +59,11 @@ public class DetallePreguntaActivity extends AppCompatActivity implements View.O
         btn = (Button)findViewById(R.id.buttonResposta);
         vg = (ViewGroup)findViewById(R.id.radioGroup);
         resOb = (TextView)findViewById(R.id.RObligatoria);
+        FrameLayout btnMenu = (FrameLayout) findViewById(R.id.menuBtn);
+        btnMenu.setOnClickListener(this);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navView = (NavigationView)findViewById(R.id.navview);
+        navView.setNavigationItemSelectedListener(new MenuListener(getApplicationContext(), drawerLayout));
         btn.setOnClickListener(this);
         api = ListActivity.api;
         //cargamos datos
@@ -61,6 +72,8 @@ public class DetallePreguntaActivity extends AppCompatActivity implements View.O
         numP = bundle.getInt("numPreg");
         idUsuari = bundle.getInt("idUsuari");
         usuari = bundle.getString("usuari");
+        TextView txt = (TextView) findViewById(R.id.headerUser);
+        txt.setText(usuari);
         v = api.getVotacionPos(idV);
         loadPregunta();
     }
@@ -139,7 +152,11 @@ public class DetallePreguntaActivity extends AppCompatActivity implements View.O
                     enviarRespostes();
                 }
                 break;
+            case R.id.menuBtn:
+                drawerLayout.openDrawer(navView);
+                break;
             }
+
     }
 
     private void enviarRespostes() {

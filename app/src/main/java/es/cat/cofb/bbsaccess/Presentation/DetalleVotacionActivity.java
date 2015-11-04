@@ -2,17 +2,21 @@ package es.cat.cofb.bbsaccess.Presentation;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import es.cat.cofb.bbsaccess.Adapters.VotacionAdapter;
+import es.cat.cofb.bbsaccess.Listeners.MenuListener;
 import es.cat.cofb.bbsaccess.Model.Evento;
 import es.cat.cofb.bbsaccess.Model.Resultado;
 import es.cat.cofb.bbsaccess.Model.Votacion;
@@ -26,6 +30,8 @@ public class DetalleVotacionActivity extends AppCompatActivity implements View.O
     int idV, idUsuari;
     String usuari;
     LinearLayout lyOKVota;
+    NavigationView navView;
+    DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +46,18 @@ public class DetalleVotacionActivity extends AppCompatActivity implements View.O
         btn = (Button) findViewById(R.id.buttonVotacio);
         btn.setOnClickListener(this);
         api = ListActivity.api;
-
+        FrameLayout btnMenu = (FrameLayout) findViewById(R.id.menuBtn);
+        btnMenu.setOnClickListener(this);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navView = (NavigationView)findViewById(R.id.navview);
+        navView.setNavigationItemSelectedListener(new MenuListener(getApplicationContext(), drawerLayout));
         //cargamos datos
         Bundle bundle=getIntent().getExtras();
+
         idV = bundle.getInt("idVotacion");
         usuari = bundle.getString("usuari");
+        TextView txt = (TextView) findViewById(R.id.headerUser);
+        txt.setText(usuari);
         if(idV == -1) {
             Evento e = api.getHistoricoId(bundle.getInt("idEvento"));
             loadVotacion(e.getVotacions().get(bundle.getInt("position")));
@@ -104,6 +117,9 @@ public class DetalleVotacionActivity extends AppCompatActivity implements View.O
                 bundle.putString("usuari", usuari);
                 i.putExtras(bundle);
                 startActivityForResult(i,1);
+                break;
+            case R.id.menuBtn:
+                drawerLayout.openDrawer(navView);
                 break;
         }
     }

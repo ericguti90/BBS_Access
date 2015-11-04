@@ -4,19 +4,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#008baa"
-        android:scaleType="centerCrop" />
+        android:layout_height="70dp"
+        android:background="#008baa">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Usuari"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
-        android:textStyle="bold"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp" />
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon"
+            android:padding="2dp"
+            android:layout_marginTop="30dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Usuari"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
+            android:textStyle="bold"
+            android:layout_gravity="bottom"
+            android:paddingTop="7dp"
+            android:paddingLeft="10dp"
+            android:id="@+id/headerUser" />
+    </LinearLayout>
+
 </FrameLayout>

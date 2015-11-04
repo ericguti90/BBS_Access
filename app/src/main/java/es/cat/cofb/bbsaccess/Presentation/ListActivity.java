@@ -1,5 +1,6 @@
 package es.cat.cofb.bbsaccess.Presentation;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -39,6 +41,7 @@ import es.cat.cofb.bbsaccess.API.JSONCommentsParser;
 import es.cat.cofb.bbsaccess.Adapters.EventoAdapter;
 import es.cat.cofb.bbsaccess.Adapters.VotacionAdapter;
 import es.cat.cofb.bbsaccess.Fragments.FragmentList;
+import es.cat.cofb.bbsaccess.Listeners.MenuListener;
 import es.cat.cofb.bbsaccess.Listeners.RecyclerItemClickListener;
 import es.cat.cofb.bbsaccess.Model.ItemList;
 import es.cat.cofb.bbsaccess.Model.Resultado;
@@ -53,7 +56,8 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     private boolean esEvento = true;
     private boolean esHistorico = false;
     //FragmentList frgListado;
-    ImageView btnEvent, btnVotation, btnHistory, btnMenu;
+    ImageView btnEvent, btnVotation, btnHistory;
+    FrameLayout btnMenu;
     String actual = "event", userNom;
     static RecyclerView eventos;
     private LinearLayoutManager mLinearLayout;
@@ -66,41 +70,37 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list);
-        api = new Resultado();
+        setContentView(R.layout.activity_list_content);
         eventos = (RecyclerView) findViewById(R.id.LstListado);
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         txtError = (TextView) findViewById(R.id.textView31);
         textList = (TextView) findViewById(R.id.textList);
         lyError = (LinearLayout) findViewById(R.id.avisError);
         navView = (NavigationView)findViewById(R.id.navview);
-        navView.setNavigationItemSelectedListener(
+        navView.setNavigationItemSelectedListener(new MenuListener(getApplicationContext(), drawerLayout));
+        /*navView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
-
-                        boolean fragmentTransaction = false;
-                        Fragment fragment = null;
-
                         switch (menuItem.getItemId()) {
-                            /*case R.id.menu_seccion_1:
-                                fragment = new Fragment11();
-                                fragmentTransaction = true;
+                            case R.id.avis_legal:
+                                Toast.makeText(getApplicationContext(),"avis legal", Toast.LENGTH_SHORT).show();
                                 break;
-                            case R.id.menu_seccion_2:
-                                fragment = new Fragment22();
-                                fragmentTransaction = true;
+                            case R.id.bustia:
+
                                 break;
-                            case R.id.menu_seccion_3:
-                                fragment = new Fragment33();
-                                fragmentTransaction = true;
+                            case R.id.contacte:
+
                                 break;
-                            case R.id.menu_opcion_1:
-                                Log.i("NavigationView", "Pulsada opción 1");
+                            case R.id.idioma:
+
                                 break;
-                            case R.id.menu_opcion_2:
-                                Log.i("NavigationView", "Pulsada opción 2");
-                                break;*/
+                            case R.id.perfil:
+                                Toast.makeText(getApplicationContext(),"perfil", Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.id.sessio:
+
+                                break;
                         }
 
                         /*if (fragmentTransaction) {
@@ -110,13 +110,13 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
 
                             menuItem.setChecked(true);
                             //getSupportActionBar().setTitle(menuItem.getTitle());
-                        }*/
+                        }
 
                         drawerLayout.closeDrawers();
 
                         return true;
                     }
-                });
+                });*/
 
         //listener fragment
     //    frgListado = (FragmentList)getSupportFragmentManager().findFragmentById(R.id.FrgListado);
@@ -126,7 +126,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         btnEvent = (ImageView) findViewById(R.id.eventIcon);
         btnVotation = (ImageView) findViewById(R.id.votationIcon);
         btnHistory = (ImageView) findViewById(R.id.historyIcon);
-        btnMenu = (ImageView) findViewById(R.id.iconMenu);
+        btnMenu = (FrameLayout) findViewById(R.id.menuBtn);
         btnEvent.setOnClickListener(this);
         btnVotation.setOnClickListener(this);
         btnHistory.setOnClickListener(this);
@@ -142,6 +142,8 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         Bundle bundle=getIntent().getExtras();
         user = bundle.getInt("idUsuari");
         userNom = bundle.getString("usuari");
+        TextView txt = (TextView) findViewById(R.id.headerUser);
+        txt.setText(userNom);
         try {
             ConnectivityManager connMgr = (ConnectivityManager)
                     getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -206,9 +208,6 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iconMenu:
-                drawerLayout.openDrawer(navView);
-                break;
             case R.id.menuBtn:
                 drawerLayout.openDrawer(navView);
                 break;

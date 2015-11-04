@@ -28,10 +28,7 @@
                 android:title="@string/opcion_2"/>
         </menu>
     </item>-->
-    <item
-        android:id="@+id/app_version"
-        android:title="COFB v1.0">
-        <menu>
+    <group>
             <item
                 android:id="@+id/avis_legal"
                 android:icon="@drawable/ic_menu"
@@ -44,22 +41,10 @@
                 android:id="@+id/contacte"
                 android:icon="@drawable/ic_menu"
                 android:title="Contacte"/>
-        </menu>
-    </item>
-    <item
-        android:id="@+id/configuracio"
-        android:title="Configuració">
-        <menu>
             <item
                 android:id="@+id/idioma"
                 android:icon="@drawable/ic_menu"
                 android:title="Canviar idioma"/>
-        </menu>
-    </item>
-    <item
-        android:id="@+id/aplicacio"
-        android:title="Aplicació">
-        <menu>
             <item
                 android:id="@+id/perfil"
                 android:icon="@drawable/ic_menu"
@@ -68,6 +53,14 @@
                 android:id="@+id/sessio"
                 android:icon="@drawable/ic_menu"
                 android:title="Tancar sessió"/>
+    </group>
+    <item
+        android:id="@+id/navigation_subheader"
+        android:title="">
+        <menu>
+            <item
+                android:id="@+id/menu_opcion_1"
+                android:title="BBSCOFB v1.0"/>
         </menu>
     </item>
 </menu>

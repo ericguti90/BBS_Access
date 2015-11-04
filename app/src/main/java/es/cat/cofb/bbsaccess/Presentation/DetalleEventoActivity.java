@@ -6,9 +6,12 @@ import android.content.SharedPreferences;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,6 +21,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import es.cat.cofb.bbsaccess.API.POST;
+import es.cat.cofb.bbsaccess.Listeners.MenuListener;
 import es.cat.cofb.bbsaccess.Model.Evento;
 import es.cat.cofb.bbsaccess.Model.Resultado;
 import es.cat.cofb.bbsaccess.R;
@@ -31,6 +35,9 @@ public class DetalleEventoActivity extends AppCompatActivity implements View.OnC
 	int id, idUsuari;
 	private NfcAdapter mNfcAdapter;
 	LinearLayout lyOK;
+	NavigationView navView;
+	DrawerLayout drawerLayout;
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +56,11 @@ public class DetalleEventoActivity extends AppCompatActivity implements View.OnC
 		btnQR = (Button) findViewById(R.id.buttonAccedirQR);
 		btnNFC = (Button) findViewById(R.id.buttonAccedirNFC);
 		lyOK = (LinearLayout) findViewById(R.id.lytGreenEvento);
+		FrameLayout btnMenu = (FrameLayout) findViewById(R.id.menuBtn);
+		btnMenu.setOnClickListener(this);
+		drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		navView = (NavigationView)findViewById(R.id.navview);
+		navView.setNavigationItemSelectedListener(new MenuListener(getApplicationContext(), drawerLayout));
 		btnQR.setOnClickListener(this);
 		btnNFC.setOnClickListener(this);
 		RelativeLayout rel = (RelativeLayout) findViewById(R.id.BtnVotaciones);
@@ -59,6 +71,8 @@ public class DetalleEventoActivity extends AppCompatActivity implements View.OnC
 		//int pos = bundle.getInt("idEvento");
 		//System.out.println(pos);
 		//api.getEventoPos(pos);
+		TextView txt = (TextView) findViewById(R.id.headerUser);
+		txt.setText(bundle.getString("usuari"));
         api = ListActivity.api;
 		idUsuari = bundle.getInt("idUsuari");
 		if(bundle.getBoolean("esHistorico")) {
@@ -137,12 +151,15 @@ public class DetalleEventoActivity extends AppCompatActivity implements View.OnC
 				Intent i = new Intent(getApplicationContext(), ListVotaEvActivity.class);
 				bundleV.putInt("idEvento", bundle.getInt("idEvento"));
 				bundleV.putInt("idUsuari", idUsuari);
+				bundleV.putString("usuari", bundle.getString("usuari"));
 				//System.out.println("esHistorico? " + bundle.getBoolean("esHistorico"));
 				bundleV.putBoolean("esHistorico", bundle.getBoolean("esHistorico"));
 				i.putExtras(bundleV);
 				startActivity(i);
 				break;
-
+			case R.id.menuBtn:
+				drawerLayout.openDrawer(navView);
+				break;
 		}
 	}
 
