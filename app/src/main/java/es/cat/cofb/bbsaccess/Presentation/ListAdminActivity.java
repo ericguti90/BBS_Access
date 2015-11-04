@@ -1,5 +1,6 @@
 package es.cat.cofb.bbsaccess.Presentation;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -33,6 +34,7 @@ public class ListAdminActivity extends AppCompatActivity {
     public static Resultado api;
     HttpURLConnection con;
     RecyclerView eventos;
+    private ProgressDialog pDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,14 @@ public class ListAdminActivity extends AppCompatActivity {
                     getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
             if (networkInfo != null && networkInfo.isConnected()) {
+                pDialog = new ProgressDialog(this);
+                pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                pDialog.setMessage("Carregant dades...");
+                pDialog.setCancelable(false);
+                pDialog.setIndeterminate(true);
+                pDialog.setProgressNumberFormat(null);
+                pDialog.setProgressPercentFormat(null);
+                pDialog.show();
                 new GetCommentsTask().
                         execute(
                                 new URL("http://xarxacd.cofb.net/app_accesscontrol/public/api/esdeveniments-accesibles"));
@@ -115,6 +125,7 @@ public class ListAdminActivity extends AppCompatActivity {
             Se crea un adaptador con el el resultado del parsing
             que se realizó al arreglo JSON
              */
+            pDialog.dismiss();
             if(s != null) {
                 api = s;
                 eventos.setAdapter(new EventoAdapter(s.getEventos()));

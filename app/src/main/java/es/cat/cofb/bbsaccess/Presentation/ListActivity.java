@@ -1,5 +1,6 @@
 package es.cat.cofb.bbsaccess.Presentation;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -60,6 +61,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     TextView txtError, textList;
     LinearLayout lyError;
     public static int user = 5;
+    private ProgressDialog pDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +147,14 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                     getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
             if (networkInfo != null && networkInfo.isConnected()) {
+                pDialog = new ProgressDialog(this);
+                pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                pDialog.setMessage("Carregant dades...");
+                pDialog.setCancelable(false);
+                pDialog.setIndeterminate(true);
+                pDialog.setProgressNumberFormat(null);
+                pDialog.setProgressPercentFormat(null);
+                pDialog.show();
                 new GetCommentsTask().
                     execute(
                             new URL("http://xarxacd.cofb.net/app_accesscontrol/public/api/assistents/"+user));
@@ -338,6 +348,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             Se crea un adaptador con el el resultado del parsing
             que se realizó al arreglo JSON
              */
+            pDialog.dismiss();
             if(s != null) {
                 api = s;
                 //ArrayAdapter<String> adapter = new ArrayAdapter<String>(

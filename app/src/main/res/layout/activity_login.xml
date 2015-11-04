@@ -82,7 +82,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="3dp"
             android:layout_marginBottom="10dp"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:editable="true" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -104,6 +105,18 @@
             android:layout_marginBottom="15dp"
             android:singleLine="true" />
 
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Recordar contrasenya"
+            android:textColor="#868786"
+            android:id="@+id/checkBox"
+            android:checked="false"
+            android:button="@drawable/checkbox_selector"
+            android:paddingLeft="10dp"
+            android:layout_marginLeft="17dp"
+            android:layout_marginBottom="20dp" />
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="40dp"
@@ -116,4 +129,5 @@
             android:paddingRight="10dp"
             android:typeface="sans"/>
     </LinearLayout>
+
 </RelativeLayout>

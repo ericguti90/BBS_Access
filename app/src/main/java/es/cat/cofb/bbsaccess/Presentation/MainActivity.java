@@ -1,14 +1,18 @@
 package es.cat.cofb.bbsaccess.Presentation;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import es.cat.cofb.bbsaccess.AsynTask.Login;
@@ -19,6 +23,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public ProgressDialog pDialog;
     Login login;
     EditText user, pass;
+    CheckBox checkBox;
+    boolean save = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +33,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button btnSesion = (Button) findViewById(R.id.button);
         user = (EditText) findViewById(R.id.editText);
         pass = (EditText) findViewById(R.id.editText2);
+        checkBox = (CheckBox) findViewById(R.id.checkBox);
         btnSesion.setOnClickListener(this);
+        checkUser();
     }
 
     @Override
@@ -56,22 +64,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button:
-                pDialog = new ProgressDialog(this);
-                pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                pDialog.setMessage("Iniciant sessió...");
-                pDialog.setCancelable(false);
-                pDialog.setIndeterminate(true);
-                pDialog.setProgressNumberFormat(null);
-                pDialog.setProgressPercentFormat(null);
-
-                login = new Login(this);
-                login.execute(user.getText().toString().split("@")[0], pass.getText().toString());
-
-                //Intent i = new Intent(this, ListActivity.class);
-
-                //startActivity(i);
-                //break;
+                iniciarSessio();
+                break;
         }
+    }
+
+    public void iniciarSessio(){
+        pDialog = new ProgressDialog(this);
+        pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        pDialog.setMessage("Iniciant sessió...");
+        pDialog.setCancelable(false);
+        pDialog.setIndeterminate(true);
+        pDialog.setProgressNumberFormat(null);
+        pDialog.setProgressPercentFormat(null);
+
+        login = new Login(this);
+        login.execute(user.getText().toString().split("@")[0], pass.getText().toString());
     }
 
     public void login(Integer result) {
@@ -83,10 +91,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             i = new Intent(getApplicationContext(), ListActivity.class);
          else
             i = new Intent(getApplicationContext(), ListAdminActivity.class);
+        if(!save && checkBox.isChecked()) saveUser(user.getText().toString(),pass.getText().toString());
         bundle.putInt("idUsuari", result);
         bundle.putString("usuari",user.getText().toString().split("@")[0]);
         i.putExtras(bundle);
         startActivity(i);
         finish();
+    }
+
+    public void checkUser(){
+        SharedPreferences prefs = getSharedPreferences("CommonPrefs", Activity.MODE_PRIVATE);
+        String usuari = prefs.getString("user", "");
+        String contra = prefs.getString("pass", "");
+        if(!usuari.equalsIgnoreCase("") && !contra.equalsIgnoreCase("")) {
+            save = true;
+            user.setText(usuari);
+            pass.setText(contra);
+            iniciarSessio();
+        }
+    }
+
+    public void saveUser(String usuari, String contra)
+    {
+        SharedPreferences prefs = getSharedPreferences("CommonPrefs", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("user", usuari);
+        editor.putString("pass", contra);
+        editor.apply();
     }
 }
