@@ -17,7 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import es.cat.cofb.bbsaccess.AsynTask.ObtenirCorreu;
-import es.cat.cofb.bbsaccess.AsynTask.ValidarAsistencia;
+import es.cat.cofb.bbsaccess.AsynTask.validarAsistencia;
 import es.cat.cofb.bbsaccess.Listeners.DialogValidarManual;
 import es.cat.cofb.bbsaccess.Listeners.DialogValidarManual2;
 import es.cat.cofb.bbsaccess.Model.Evento;
@@ -40,7 +40,7 @@ public class DetalleEventoAdminActivity extends FragmentActivity implements View
     private NfcAdapter mNfcAdapter;
     LinearLayout lyOK, lyKO;
     public ProgressDialog pDialog;
-    ValidarAsistencia va;
+    validarAsistencia va;
     ObtenirCorreu oc;
 
     @Override
@@ -140,7 +140,7 @@ public class DetalleEventoAdminActivity extends FragmentActivity implements View
         pDialog.setIndeterminate(true);
         pDialog.setProgressNumberFormat(null);
         pDialog.setProgressPercentFormat(null);
-        va = new ValidarAsistencia(this);
+        va = new validarAsistencia(this);
         va.execute(idV, correu);
 
     }
