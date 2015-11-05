@@ -76,15 +76,15 @@ public class DetalleEventoActivity extends AppCompatActivity implements View.OnC
         api = ListActivity.api;
 		idUsuari = bundle.getInt("idUsuari");
 		if(bundle.getBoolean("esHistorico")) {
-			loadEvento(api.getHistoricoPos(bundle.getInt("idEvento")));
+			loadEvento(api.getHistoricoPos(bundle.getInt("idEvento")), true);
 		}
 		else {
-			loadEvento(api.getEventoPos(bundle.getInt("idEvento")));
+			loadEvento(api.getEventoPos(bundle.getInt("idEvento")), false);
 			rel.setVisibility(View.GONE);
 		}
 	}
 
-	private void loadEvento(Evento evento) {
+	private void loadEvento(Evento evento, boolean assistit) {
 		lyOK.setVisibility(View.GONE);
 		id = evento.getId();
 		tituloEvento.setText(evento.getTitol());
@@ -97,8 +97,14 @@ public class DetalleEventoActivity extends AppCompatActivity implements View.OnC
 		else presencial.setText("No");
 		numAss.setText(String.valueOf(evento.getNumAss()));
 		if(evento.isInscrit()) {
-			btnQR.setText("Accedir mitjançant QR");
-			if (mNfcAdapter == null) btnNFC.setVisibility(View.GONE);
+			if(!assistit) {
+				btnQR.setText("Accedir mitjançant QR");
+				if (mNfcAdapter == null) btnNFC.setVisibility(View.GONE);
+			}
+			else {
+				btnNFC.setVisibility(View.GONE);
+				btnQR.setVisibility(View.GONE);
+			}
 		}
 		else {
 			btnQR.setText("Inscriure");

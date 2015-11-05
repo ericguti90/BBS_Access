@@ -174,7 +174,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Encara no hi ha cap votació disponible"
+                android:text="Encara no hi ha cap esdeveniment disponible"
                 android:id="@+id/textView31"
                 android:textColor="#934501" />
         </LinearLayout>
