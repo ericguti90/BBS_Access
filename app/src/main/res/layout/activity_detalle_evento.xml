@@ -331,7 +331,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="s&apos;han registrat correctament"
+                android:text="s&apos;ha registrat correctament"
                 android:id="@+id/textView30"
                 android:textColor="#04918a" />
         </LinearLayout>

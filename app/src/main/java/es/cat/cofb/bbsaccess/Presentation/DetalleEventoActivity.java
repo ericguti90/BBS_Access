@@ -107,7 +107,7 @@ public class DetalleEventoActivity extends AppCompatActivity implements View.OnC
 			}
 		}
 		else {
-			btnQR.setText("Inscriure");
+			btnQR.setText("Inscriu-te");
 			btnNFC.setVisibility(View.GONE);
 		}
 	}

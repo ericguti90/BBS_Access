@@ -135,4 +135,10 @@ public class Resultado {
     public void deleteVotacio(int id) {
         votaciones.remove(id);
     }
+
+    public boolean existeVotacion(String titulo) {
+        for(int i = 0; i < votaciones.size(); ++i)
+            if(votaciones.get(i).getTitol().equals(titulo)) return true;
+        return false;
+    }
 }

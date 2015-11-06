@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BBS Access</string>
+    <string name="app_name">BBS Accés</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_detalle_votacion">DetalleVotacionActivity</string>
 </resources>

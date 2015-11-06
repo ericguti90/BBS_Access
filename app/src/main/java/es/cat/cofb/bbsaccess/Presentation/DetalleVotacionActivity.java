@@ -77,7 +77,7 @@ public class DetalleVotacionActivity extends AppCompatActivity implements View.O
         dataHoraFin.setText(votacion.getDataHoraFin());
         if(votacion.getFeta().equals("votacioNoFeta")) VotacioFeta.setText("No");
         else {
-            VotacioFeta.setText("Si");
+            VotacioFeta.setText("Sí");
             btn.setVisibility(View.GONE);
         }
 
@@ -130,7 +130,7 @@ public class DetalleVotacionActivity extends AppCompatActivity implements View.O
         if ((requestCode == 1) && (resultCode == RESULT_OK)){
             lyOKVota.setVisibility(View.VISIBLE);
             btn.setVisibility(View.GONE);
-            VotacioFeta.setText("Si");
+            VotacioFeta.setText("Sí");
             api.deleteVotacio(idV);
             if(api.getVotaciones().size() == 0) ListActivity.eventos.setVisibility(View.GONE);
             else ListActivity.eventos.setAdapter(new VotacionAdapter(api.getVotaciones()));
