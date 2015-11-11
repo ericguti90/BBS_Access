@@ -42,20 +42,24 @@ public class ListAdminActivity extends AppCompatActivity implements View.OnClick
     FrameLayout btnMenu;
     private DrawerLayout drawerLayout;
     private NavigationView navView;
+    String userNom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_admin);
+        Bundle bundle=getIntent().getExtras();
+        userNom = bundle.getString("usuari");
         api = new Resultado();
         eventos = (RecyclerView) findViewById(R.id.LstListadoAdmin);
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         navView = (NavigationView)findViewById(R.id.navview);
-        navView.setNavigationItemSelectedListener(new MenuListener(getApplicationContext(), drawerLayout));
+        navView.setNavigationItemSelectedListener(new MenuListener(drawerLayout, this));
         LinearLayoutManager mLinearLayout = new LinearLayoutManager(this);
         eventos.setLayoutManager(mLinearLayout);
         btnMenu = (FrameLayout) findViewById(R.id.menuBtn);
         btnMenu.setOnClickListener(this);
+
         try {
             ConnectivityManager connMgr = (ConnectivityManager)
                     getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -149,6 +153,7 @@ public class ListAdminActivity extends AppCompatActivity implements View.OnClick
             pDialog.dismiss();
             if(s != null) {
                 api = s;
+                api.setUser(userNom);
                 eventos.setAdapter(new EventoAdapter(s.getEventos()));
             }
             else Toast.makeText(

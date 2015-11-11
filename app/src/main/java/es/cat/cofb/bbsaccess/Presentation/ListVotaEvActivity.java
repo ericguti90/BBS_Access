@@ -81,7 +81,7 @@ public class ListVotaEvActivity extends AppCompatActivity implements View.OnClic
         btnMenu.setOnClickListener(this);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navView = (NavigationView)findViewById(R.id.navview);
-        navView.setNavigationItemSelectedListener(new MenuListener(getApplicationContext(), drawerLayout));
+        navView.setNavigationItemSelectedListener(new MenuListener(drawerLayout, this));
     }
 
     @Override

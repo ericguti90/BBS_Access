@@ -13,9 +13,9 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".Presentation.MainActivity"
-            android:label="@string/app_name"
             android:configChanges="orientation"
-            android:screenOrientation="portrait">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,39 +24,57 @@
         </activity>
         <activity
             android:name=".Presentation.ListActivity"
-            android:label="@string/app_name"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Presentation.DetalleEventoActivity"
-            android:label="@string/app_name"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Presentation.DetalleVotacionActivity"
-            android:label="@string/title_activity_detalle_votacion"
             android:configChanges="orientation"
-            android:screenOrientation="portrait">
+            android:label="@string/title_activity_detalle_votacion"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".Presentation.DetallePreguntaActivity"
+            android:configChanges="orientation"
             android:label="BBS Accés"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".Presentation.QRViewActivity"
+        <activity
+            android:name=".Presentation.QRViewActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".Presentation.ListVotaEvActivity"
+        <activity
+            android:name=".Presentation.ListVotaEvActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".Presentation.ListAdminActivity"
+        <activity
+            android:name=".Presentation.ListAdminActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".Presentation.DetalleEventoAdminActivity"
+        <activity
+            android:name=".Presentation.DetalleEventoAdminActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".Presentation.AvisoLegalActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".Presentation.ContacteActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity android:name=".Presentation.PerfilActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
         </activity>

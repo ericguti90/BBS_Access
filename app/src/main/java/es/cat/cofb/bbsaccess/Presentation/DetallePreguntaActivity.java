@@ -63,7 +63,7 @@ public class DetallePreguntaActivity extends AppCompatActivity implements View.O
         btnMenu.setOnClickListener(this);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navView = (NavigationView)findViewById(R.id.navview);
-        navView.setNavigationItemSelectedListener(new MenuListener(getApplicationContext(), drawerLayout));
+        navView.setNavigationItemSelectedListener(new MenuListener(drawerLayout, this));
         btn.setOnClickListener(this);
         api = ListActivity.api;
         //cargamos datos

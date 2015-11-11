@@ -60,7 +60,7 @@ public class DetalleEventoActivity extends AppCompatActivity implements View.OnC
 		btnMenu.setOnClickListener(this);
 		drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		navView = (NavigationView)findViewById(R.id.navview);
-		navView.setNavigationItemSelectedListener(new MenuListener(getApplicationContext(), drawerLayout));
+		navView.setNavigationItemSelectedListener(new MenuListener(drawerLayout, this));
 		btnQR.setOnClickListener(this);
 		btnNFC.setOnClickListener(this);
 		RelativeLayout rel = (RelativeLayout) findViewById(R.id.BtnVotaciones);

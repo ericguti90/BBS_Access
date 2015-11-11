@@ -10,6 +10,7 @@ public class Resultado {
     private ArrayList<Evento> eventos;
     private ArrayList<Votacion> votaciones;
     private ArrayList<Evento> historico;
+    private String user = null;
 
     public Resultado() {
         this.eventos = new ArrayList<Evento>();
@@ -140,5 +141,23 @@ public class Resultado {
         for(int i = 0; i < votaciones.size(); ++i)
             if(votaciones.get(i).getTitol().equals(titulo)) return true;
         return false;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public int getVotacionesHechas() {
+        int result = 0;
+        for(int i = 0; i < historico.size(); ++i) {
+            for(int j = 0; j < historico.get(i).getVotacions().size(); ++j){
+                if(historico.get(i).getVotacions().get(j).getFeta().equals("votacioFeta")) ++result;
+            }
+        }
+        return result;
     }
 }

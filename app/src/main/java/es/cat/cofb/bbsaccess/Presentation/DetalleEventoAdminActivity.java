@@ -76,7 +76,7 @@ public class DetalleEventoAdminActivity extends FragmentActivity implements View
         btnMenu.setOnClickListener(this);
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         navView = (NavigationView)findViewById(R.id.navview);
-        navView.setNavigationItemSelectedListener(new MenuListener(getApplicationContext(), drawerLayout));
+        navView.setNavigationItemSelectedListener(new MenuListener(drawerLayout, this));
 
         //cargamos datos
         bundle=getIntent().getExtras();

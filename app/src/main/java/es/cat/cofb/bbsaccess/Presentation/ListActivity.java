@@ -77,7 +77,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         textList = (TextView) findViewById(R.id.textList);
         lyError = (LinearLayout) findViewById(R.id.avisError);
         navView = (NavigationView)findViewById(R.id.navview);
-        navView.setNavigationItemSelectedListener(new MenuListener(getApplicationContext(), drawerLayout));
+        navView.setNavigationItemSelectedListener(new MenuListener(drawerLayout, this));
         /*navView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -350,6 +350,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             pDialog.dismiss();
             if(s != null) {
                 api = s;
+                api.setUser(userNom);
                 //ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 //        getBaseContext(),
                 //        android.R.layout.simple_list_item_1,
