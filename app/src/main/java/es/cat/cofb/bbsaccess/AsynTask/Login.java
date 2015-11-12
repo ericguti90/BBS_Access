@@ -10,6 +10,7 @@ import java.net.URLEncoder;
 
 import es.cat.cofb.bbsaccess.API.POST;
 import es.cat.cofb.bbsaccess.Presentation.MainActivity;
+import es.cat.cofb.bbsaccess.R;
 
 /**
  * Created by egutierrez on 27/10/2015.
@@ -57,14 +58,14 @@ public class Login extends AsyncTask<String, Integer, String>  {
         DPActivity.pDialog.dismiss();
         int r = Integer.valueOf(result);
         if(r == -1) {
-            Toast.makeText(DPActivity, "Usuari incorrecte", Toast.LENGTH_SHORT).show();
+            Toast.makeText(DPActivity, R.string.usuariIncorrecte, Toast.LENGTH_SHORT).show();
         }
         else {DPActivity.login(r);}
     }
 
     @Override
     protected void onCancelled() {
-        Toast.makeText(DPActivity, "Error: no s'han enviat les dades!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(DPActivity, R.string.errorDades, Toast.LENGTH_SHORT).show();
     }
 
 

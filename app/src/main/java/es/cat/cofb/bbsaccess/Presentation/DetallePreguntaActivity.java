@@ -84,7 +84,7 @@ public class DetallePreguntaActivity extends AppCompatActivity implements View.O
         int total = v.getPreguntes().size();
         contador.setText(numP+"/"+total);
         pregunta.setText(v.getPreguntes().get(numP-1).getTitol());
-        if(numP == total) btn.setText("Finalitzar");
+        if(numP == total) btn.setText(R.string.finalitzar);
         else btn.setText("Continuar");
         if(v.getPreguntes().get(numP-1).getOpcions().size() == 0) vg.setVisibility(View.GONE);
         else loadOpcions(v.getPreguntes().get(numP-1).getOpcions());
@@ -167,7 +167,7 @@ public class DetallePreguntaActivity extends AppCompatActivity implements View.O
     private void validarAsistencia() {
         pDialog = new ProgressDialog(this);
         pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        pDialog.setMessage("Enviant dades...");
+        pDialog.setMessage(getString(R.string.enviantDades));
         pDialog.setCancelable(false);
         pDialog.setIndeterminate(true);
         pDialog.setProgressNumberFormat(null);
@@ -179,7 +179,7 @@ public class DetallePreguntaActivity extends AppCompatActivity implements View.O
     public void sentRespostes() {
         pDialog = new ProgressDialog(this);
         pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        pDialog.setMessage("Enviant dades...");
+        pDialog.setMessage(getString(R.string.enviantDades));
         pDialog.setCancelable(false);
         //pDialog.setMax(100);
         dv = new DadesVotacio(this);
@@ -189,7 +189,7 @@ public class DetallePreguntaActivity extends AppCompatActivity implements View.O
     private void crearUsuari() {
         pDialog = new ProgressDialog(this);
         pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        pDialog.setMessage("Enviant dades...");
+        pDialog.setMessage(getString(R.string.enviantDades));
         pDialog.setCancelable(false);
         pDialog.setIndeterminate(true);
         pDialog.setProgressNumberFormat(null);

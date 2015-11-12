@@ -9,6 +9,7 @@ import java.net.URLEncoder;
 
 import es.cat.cofb.bbsaccess.API.POST;
 import es.cat.cofb.bbsaccess.Presentation.PerfilActivity;
+import es.cat.cofb.bbsaccess.R;
 
 /**
  * Created by egutierrez on 11/11/2015.
@@ -58,6 +59,6 @@ public class ObtenirNom extends AsyncTask<String, Integer, Boolean> {
 
     @Override
     protected void onCancelled() {
-        Toast.makeText(PActivity, "Error: no es pot obtenir el nom", Toast.LENGTH_SHORT).show();
+        Toast.makeText(PActivity, R.string.errorNom, Toast.LENGTH_SHORT).show();
     }
 }

@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void iniciarSessio(){
         pDialog = new ProgressDialog(this);
         pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        pDialog.setMessage("Iniciant sessió...");
+        pDialog.setMessage(getString(R.string.iniciantSessio));
         pDialog.setCancelable(false);
         pDialog.setIndeterminate(true);
         pDialog.setProgressNumberFormat(null);

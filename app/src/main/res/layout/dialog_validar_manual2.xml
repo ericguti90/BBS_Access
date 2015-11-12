@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="L&apos;assistent es correcte?"
+        android:text="@string/assistentEsCorrecte"
         android:id="@+id/textView35"
         android:background="@drawable/textview_underline"
         android:textColor="#105b7a"
@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Nom:"
+                android:text="@string/nom"
                 android:id="@+id/textView33"
                 android:layout_weight="0.06" />
 
@@ -60,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Correu:"
+                android:text="@string/correu"
                 android:id="@+id/textView34" />
 
             <TextView
@@ -84,7 +84,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Correcte"
+            android:text="@string/correcte"
             android:id="@+id/correcteManual"
             android:background="#e67e22"
             android:textColor="@android:color/white"
@@ -95,7 +95,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Incorrecte"
+            android:text="@string/incorrecte"
             android:id="@+id/incorrecteManual"
             android:background="#e67e22"
             android:textColor="@android:color/white"

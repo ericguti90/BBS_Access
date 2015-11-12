@@ -73,11 +73,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Avís Legal"
                 android:id="@+id/titol"
                 android:textColor="#008ba9"
                 android:background="#F6FBFC"
-                android:padding="10dp" />
+                android:padding="10dp"
+                android:text="@string/avisLegal" />
 
             <ImageView
                 android:layout_width="wrap_content"

@@ -9,6 +9,7 @@ import java.net.URLEncoder;
 
 import es.cat.cofb.bbsaccess.API.POST;
 import es.cat.cofb.bbsaccess.Presentation.DetallePreguntaActivity;
+import es.cat.cofb.bbsaccess.R;
 
 /**
  * Created by egutierrez on 30/10/2015.
@@ -64,6 +65,6 @@ public class ValidarAsistenciaVotacion extends AsyncTask<String, Integer, Boolea
 
     @Override
     protected void onCancelled() {
-        Toast.makeText(DPActivity, "Error: no es pot validar", Toast.LENGTH_SHORT).show();
+        Toast.makeText(DPActivity, R.string.errorValidar, Toast.LENGTH_SHORT).show();
     }
 }

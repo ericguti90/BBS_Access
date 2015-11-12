@@ -32,7 +32,7 @@ public class ContacteActivity extends AppCompatActivity implements View.OnClickL
         WebView webView = (WebView) findViewById(R.id.webView);
         webView.loadUrl("http://gis.cofb.net/apps_service/html/1002.html");
         TextView titol = (TextView) findViewById(R.id.titol);
-        titol.setText("Contacte");
+        titol.setText(R.string.contacte);
     }
 
     @Override

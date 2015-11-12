@@ -45,22 +45,23 @@ public class PerfilActivity extends AppCompatActivity implements View.OnClickLis
             votaDisp.setText(String.valueOf(ListActivity.api.getVotaciones().size()));
             esdAcc.setText(String.valueOf(ListActivity.api.getHistorico().size()));
             votaFet.setText(String.valueOf(ListActivity.api.getVotacionesHechas()));
+            obtenirNom();
+            FrameLayout btnMenu = (FrameLayout) findViewById(R.id.menuBtn);
+            btnMenu.setOnClickListener(this);
+            drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+            navView = (NavigationView)findViewById(R.id.navview);
+            navView.setNavigationItemSelectedListener(new MenuListener(drawerLayout, this));
         } catch(Exception e) {
-            Toast.makeText(getApplicationContext(),"Perfil només disponible per als colegiats", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),R.string.errorPerfil, Toast.LENGTH_SHORT).show();
             finish();
         }
-        obtenirNom();
-        FrameLayout btnMenu = (FrameLayout) findViewById(R.id.menuBtn);
-        btnMenu.setOnClickListener(this);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        navView = (NavigationView)findViewById(R.id.navview);
-        navView.setNavigationItemSelectedListener(new MenuListener(drawerLayout, this));
+
     }
 
     private void obtenirNom() {
         pDialog = new ProgressDialog(this);
         pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        pDialog.setMessage("Obtenint dades...");
+        pDialog.setMessage(getString(R.string.obtenirDades));
         pDialog.setCancelable(false);
         pDialog.setIndeterminate(true);
         pDialog.setProgressNumberFormat(null);

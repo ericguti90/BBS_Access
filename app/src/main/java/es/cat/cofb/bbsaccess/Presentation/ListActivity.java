@@ -151,7 +151,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             if (networkInfo != null && networkInfo.isConnected()) {
                 pDialog = new ProgressDialog(this);
                 pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                pDialog.setMessage("Carregant dades...");
+                pDialog.setMessage(getString(R.string.carregantDades));
                 pDialog.setCancelable(false);
                 pDialog.setIndeterminate(true);
                 pDialog.setProgressNumberFormat(null);
@@ -161,7 +161,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                     execute(
                             new URL("http://xarxacd.cofb.net/app_accesscontrol/public/api/assistents/"+user));
             } else {
-                Toast.makeText(this, "Error de conexion", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.errorConnexio, Toast.LENGTH_LONG).show();
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -215,11 +215,11 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 if(actual != "event") {
                     actual = "event";
                     //frgListado.setList(datos);
-                    textList.setText("Esdeveniments");
+                    textList.setText(R.string.esdeveniments);
                     setImgStatus(R.drawable.event_push, R.drawable.votation, R.drawable.history);
                     if(api.getEventos().size() == 0) {
                         eventos.setVisibility(View.GONE);
-                        txtError.setText("Encara no hi ha cap esdeveniment disponible");
+                        txtError.setText(R.string.EsdNoDisp);
                     }
                     else {
                         eventos.setVisibility(View.VISIBLE);
@@ -232,12 +232,12 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.votationIcon:
                 if(actual != "votation") {
                     actual = "votation";
-                    textList.setText("Votacions");
+                    textList.setText(R.string.votacions);
                     //frgListado.setList(datos);
                     setImgStatus(R.drawable.event, R.drawable.votation_push, R.drawable.history);
                     if(api.getVotaciones().size() == 0) {
                         eventos.setVisibility(View.GONE);
-                        txtError.setText("Encara no hi ha cap votació disponible");
+                        txtError.setText(R.string.VotaNoDisp);
                     }
                     else {
                         eventos.setVisibility(View.VISIBLE);
@@ -250,12 +250,12 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.historyIcon:
                 if(actual != "history") {
                     actual = "history";
-                    textList.setText("Històrics");
+                    textList.setText(R.string.historics);
                     //frgListado.setList(datos);
                     setImgStatus(R.drawable.event, R.drawable.votation, R.drawable.history_push);
                     if(api.getHistorico().size() == 0) {
                         eventos.setVisibility(View.GONE);
-                        txtError.setText("Encara no has accedit a cap esdeveniment");
+                        txtError.setText(R.string.HisNoDisp);
                     }
                     else {
                         eventos.setVisibility(View.VISIBLE);

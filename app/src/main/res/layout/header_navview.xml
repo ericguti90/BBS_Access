@@ -21,7 +21,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:text="Usuari"
+            android:text="@string/usuari"
             android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
             android:textStyle="bold"
             android:layout_gravity="bottom"

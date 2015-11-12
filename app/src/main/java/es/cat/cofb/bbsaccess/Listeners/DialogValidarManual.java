@@ -46,7 +46,7 @@ public class DialogValidarManual extends DialogFragment {
                             listener.onDialogValidar(nif.getText().toString(), numF.getText().toString());
                             dismiss();
                         }
-                        else Toast.makeText(getActivity().getApplicationContext(),"No hi han dades per validar",Toast.LENGTH_SHORT).show();
+                        else Toast.makeText(getActivity().getApplicationContext(),R.string.noDadesValidar,Toast.LENGTH_SHORT).show();
                     }
                 }
         );

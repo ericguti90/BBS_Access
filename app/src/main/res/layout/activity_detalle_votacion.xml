@@ -107,7 +107,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Esdeveniment:"
+                android:text="@string/esdeveniment"
                 android:id="@+id/textView18"
                 android:textStyle="bold"/>
 
@@ -157,7 +157,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Data i hora Fi:"
+                android:text="@string/fechaHoraFin"
                 android:id="@+id/textView22"
                 android:textStyle="bold"/>
 
@@ -198,7 +198,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:text="Votar"
+            android:text="@string/votar"
             android:id="@+id/buttonVotacio"
             android:layout_gravity="center_horizontal"
             android:background="#e67e22"
@@ -237,7 +237,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Moltes gràcies"
+                android:text="@string/moltesGracies"
                 android:id="@+id/textView29"
                 android:textColor="#04918a" />
 
@@ -245,7 +245,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="les seves dades s&apos;han enviat correctament"
+                android:text="@string/dadesEnviadesCorrectament"
                 android:id="@+id/textView30"
                 android:textColor="#04918a" />
         </LinearLayout>

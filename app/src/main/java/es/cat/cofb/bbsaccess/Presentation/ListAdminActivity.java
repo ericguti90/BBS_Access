@@ -67,7 +67,7 @@ public class ListAdminActivity extends AppCompatActivity implements View.OnClick
             if (networkInfo != null && networkInfo.isConnected()) {
                 pDialog = new ProgressDialog(this);
                 pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                pDialog.setMessage("Carregant dades...");
+                pDialog.setMessage(getString(R.string.carregantDades));
                 pDialog.setCancelable(false);
                 pDialog.setIndeterminate(true);
                 pDialog.setProgressNumberFormat(null);
@@ -77,7 +77,7 @@ public class ListAdminActivity extends AppCompatActivity implements View.OnClick
                         execute(
                                 new URL("http://xarxacd.cofb.net/app_accesscontrol/public/api/esdeveniments-accesibles"));
             } else {
-                Toast.makeText(this, "Error de conexion", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.errorConnexio), Toast.LENGTH_LONG).show();
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();

@@ -32,27 +32,27 @@
             <item
                 android:id="@+id/avis_legal"
                 android:icon="@drawable/ic_menu"
-                android:title="Avís legal" />
+                android:title="@string/avisLegal" />
             <item
                 android:id="@+id/bustia"
                 android:icon="@drawable/ic_menu"
-                android:title="Bústia de suggeriments"/>
+                android:title="@string/bustiaSuggeriments"/>
             <item
                 android:id="@+id/contacte"
                 android:icon="@drawable/ic_menu"
-                android:title="Contacte"/>
+                android:title="@string/contacte"/>
             <item
                 android:id="@+id/idioma"
                 android:icon="@drawable/ic_menu"
-                android:title="Canviar idioma"/>
+                android:title="@string/canviarIdioma"/>
             <item
                 android:id="@+id/perfil"
                 android:icon="@drawable/ic_menu"
-                android:title="El meu perfil"/>
+                android:title="@string/elMeuPerfil"/>
             <item
                 android:id="@+id/sessio"
                 android:icon="@drawable/ic_menu"
-                android:title="Tancar sessió"/>
+                android:title="@string/tancarSessio"/>
     </group>
     <item
         android:id="@+id/navigation_subheader"
@@ -60,7 +60,7 @@
         <menu>
             <item
                 android:id="@+id/menu_opcion_1"
-                android:title="BBSCOFB v1.0"/>
+                android:title="@string/versio"/>
         </menu>
     </item>
 </menu>

@@ -136,7 +136,7 @@ public class DetalleEventoAdminActivity extends FragmentActivity implements View
                 if(id == Integer.valueOf(scanResult.getContents().toString().split(";")[0])) {
                     validarAcces(scanResult.getContents().toString().split(";")[0],scanResult.getContents().toString().split(";")[1]);
                 }
-                else Toast.makeText(getApplicationContext(), "L'entrada no pertany a aquest esdeveniment", Toast.LENGTH_SHORT).show();
+                else Toast.makeText(getApplicationContext(), R.string.entradaNoValida, Toast.LENGTH_SHORT).show();
             }
         }// else continue with any other code you need in the method
         else {
@@ -149,7 +149,7 @@ public class DetalleEventoAdminActivity extends FragmentActivity implements View
     private void validarAcces(String idV, String correu) {
         pDialog = new ProgressDialog(this);
         pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        pDialog.setMessage("Validant accès...");
+        pDialog.setMessage(getString(R.string.validarAcces));
         pDialog.setCancelable(false);
         pDialog.setIndeterminate(true);
         pDialog.setProgressNumberFormat(null);
@@ -163,20 +163,20 @@ public class DetalleEventoAdminActivity extends FragmentActivity implements View
         if(resp == -1) {
             lyOK.setVisibility(View.GONE);
             lyKO.setVisibility(View.VISIBLE);
-            textKO.setText("L'assistent no s'ha apuntat a l'esdeveniment");
+            textKO.setText(R.string.noApuntat);
             //Toast.makeText(getApplicationContext(), "L'assistent no s'ha apuntat a l'esdeveniment", Toast.LENGTH_SHORT).show();
         }
         else if(resp == 0){
             lyOK.setVisibility(View.GONE);
             lyKO.setVisibility(View.VISIBLE);
-            textKO.setText("L'assistent ja ha accedit a l'esdeveniment");
+            textKO.setText(R.string.jaApuntat);
             //Toast.makeText(getApplicationContext(), "L'assistent ja ha accedit", Toast.LENGTH_SHORT).show();
         }
         else {
             numAss.setText(resp + "/" + numAssTotal);
             lyOK.setVisibility(View.VISIBLE);
             lyKO.setVisibility(View.GONE);
-            textOK.setText("pot accedir a l'esdeveniment");
+            textOK.setText(R.string.accedirEvent);
         }
     }
 
@@ -184,7 +184,7 @@ public class DetalleEventoAdminActivity extends FragmentActivity implements View
         //Toast.makeText(getApplicationContext(),"validar", Toast.LENGTH_SHORT).show();
         pDialog = new ProgressDialog(this);
         pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        pDialog.setMessage("Enviant dades...");
+        pDialog.setMessage(getString(R.string.enviantDades));
         pDialog.setCancelable(false);
         pDialog.setIndeterminate(true);
         pDialog.setProgressNumberFormat(null);

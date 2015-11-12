@@ -12,6 +12,7 @@ import java.net.URLEncoder;
 
 import es.cat.cofb.bbsaccess.API.POST;
 import es.cat.cofb.bbsaccess.Presentation.DetalleEventoAdminActivity;
+import es.cat.cofb.bbsaccess.R;
 
 /**
  * Created by egutierrez on 03/11/2015.
@@ -63,6 +64,6 @@ public class ObtenirCorreu extends AsyncTask<String, Integer, Boolean> {
 
     @Override
     protected void onCancelled() {
-        Toast.makeText(DEAActivity, "Error: no es pot validar", Toast.LENGTH_SHORT).show();
+        Toast.makeText(DEAActivity, R.string.errorValidar, Toast.LENGTH_SHORT).show();
     }
 }

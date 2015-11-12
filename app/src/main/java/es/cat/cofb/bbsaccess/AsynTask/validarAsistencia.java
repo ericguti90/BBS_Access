@@ -9,6 +9,7 @@ import java.net.URLEncoder;
 
 import es.cat.cofb.bbsaccess.API.POST;
 import es.cat.cofb.bbsaccess.Presentation.DetalleEventoAdminActivity;
+import es.cat.cofb.bbsaccess.R;
 
 public class validarAsistencia extends AsyncTask<String, Integer, Boolean> {
 
@@ -59,6 +60,6 @@ public class validarAsistencia extends AsyncTask<String, Integer, Boolean> {
 
     @Override
     protected void onCancelled() {
-        Toast.makeText(DEAActivity, "Error: no es pot validar", Toast.LENGTH_SHORT).show();
+        Toast.makeText(DEAActivity, R.string.errorValidar, Toast.LENGTH_SHORT).show();
     }
 }

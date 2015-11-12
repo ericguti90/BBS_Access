@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Validar manualment"
+        android:text="@string/validarManual2"
         android:id="@+id/textView35"
         android:background="@drawable/textview_underline"
         android:textColor="#105b7a"
@@ -56,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Número de farmacèutic:"
+                android:text="@string/numFarmaceutic"
                 android:id="@+id/textView34" />
 
             <EditText

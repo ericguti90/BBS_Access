@@ -9,6 +9,7 @@ import java.net.URLEncoder;
 
 import es.cat.cofb.bbsaccess.API.POST;
 import es.cat.cofb.bbsaccess.Presentation.DetallePreguntaActivity;
+import es.cat.cofb.bbsaccess.R;
 
 /**
  * Created by egutierrez on 29/10/2015.
@@ -79,6 +80,6 @@ public class CrearAssistent extends AsyncTask<String, Integer, Boolean> {
 
     @Override
     protected void onCancelled() {
-        Toast.makeText(DPActivity, "Error: no s'ha creat l'assistent!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(DPActivity, R.string.errorCrearAssistent, Toast.LENGTH_SHORT).show();
     }
 }

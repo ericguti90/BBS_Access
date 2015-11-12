@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Benvinguts"
+            android:text="@string/benvinguts"
             android:id="@+id/textView4"
             android:layout_weight="1"
             android:background="#00b2d9"
@@ -58,7 +58,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Iniciar sessió"
+            android:text="@string/iniciarSessio"
             android:textColor="#105b7a"
             android:id="@+id/textView"
             android:textSize="17dp"
@@ -69,7 +69,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Usuari"
+            android:text="@string/usuari"
             android:id="@+id/textView2"
             android:layout_marginLeft="10dp" />
 
@@ -88,7 +88,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Contrasenya"
+            android:text="@string/contrasenya"
             android:id="@+id/textView3"
             android:layout_marginLeft="10dp" />
 
@@ -108,7 +108,7 @@
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Recordar contrasenya"
+            android:text="@string/recordarContrasenya"
             android:textColor="#868786"
             android:id="@+id/checkBox"
             android:checked="false"
@@ -120,7 +120,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:text="Iniciar Sessió"
+            android:text="@string/iniciarSessio"
             android:id="@+id/button"
             android:layout_gravity="center_horizontal"
             android:background="#e67e22"

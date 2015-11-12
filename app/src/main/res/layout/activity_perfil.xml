@@ -73,7 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="El meu perfil"
+                android:text="@string/elMeuPerfil"
                 android:id="@+id/titol"
                 android:textColor="#008ba9"
                 android:background="#F6FBFC"
@@ -113,7 +113,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Usuari"
+                android:text="@string/usuari"
                 android:id="@+id/textView36"
                 android:gravity="center"
                 android:textColor="#105b7a"/>
@@ -139,7 +139,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Esdeveniments disponibles:"
+                android:text="@string/esdevenimentsDisponibles2"
                 android:id="@+id/textView38"
                 android:textStyle="bold"/>
 
@@ -165,7 +165,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Votacions disponibles:"
+                android:text="@string/votaDisponibles2"
                 android:id="@+id/textView40"
                 android:textStyle="bold"/>
 
@@ -190,7 +190,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Esdeveniments accedits:"
+                android:text="@string/esdevenimentsAccedits"
                 android:id="@+id/textView42"
                 android:textStyle="bold" />
 
@@ -215,7 +215,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Votacions fetes:"
+                android:text="@string/votaFetes"
                 android:id="@+id/textView44"
                 android:textStyle="bold"/>
 

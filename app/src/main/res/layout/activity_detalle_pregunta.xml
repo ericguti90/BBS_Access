@@ -99,7 +99,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Resposta obligatòria"
+            android:text="@string/respostaObligatoria"
             android:id="@+id/RObligatoria"
             android:paddingLeft="15dp"
             android:paddingTop="10dp"

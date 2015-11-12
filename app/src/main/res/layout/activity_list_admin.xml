@@ -67,7 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Esdeveniments disponibles"
+            android:text="@string/esdevenimentsDisponibles"
             android:id="@+id/textList"
             android:textColor="#008ba9"
             android:background="#F6FBFC"

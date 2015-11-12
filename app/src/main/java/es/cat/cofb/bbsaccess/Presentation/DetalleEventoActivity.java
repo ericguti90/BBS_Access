@@ -98,7 +98,7 @@ public class DetalleEventoActivity extends AppCompatActivity implements View.OnC
 		numAss.setText(String.valueOf(evento.getNumAss()));
 		if(evento.isInscrit()) {
 			if(!assistit) {
-				btnQR.setText("Accedir mitjançant QR");
+				btnQR.setText(R.string.accedirQR);
 				if (mNfcAdapter == null) btnNFC.setVisibility(View.GONE);
 			}
 			else {
@@ -107,7 +107,7 @@ public class DetalleEventoActivity extends AppCompatActivity implements View.OnC
 			}
 		}
 		else {
-			btnQR.setText("Inscriu-te");
+			btnQR.setText(R.string.inscriu);
 			btnNFC.setVisibility(View.GONE);
 		}
 	}
@@ -117,7 +117,7 @@ public class DetalleEventoActivity extends AppCompatActivity implements View.OnC
 	public void onClick(View v) {
 		switch (v.getId()) {
 			case R.id.buttonAccedirQR:
-				if(btnQR.getText().toString().equals("Accedir mitjançant QR")) {
+				if(btnQR.getText().toString().equals(getString(R.string.accedirQR))) {
 					Bundle bundleQR = new Bundle();
 					Intent i = new Intent(getApplicationContext(), QRViewActivity.class);
 					bundleQR.putInt("idEvento", id);
@@ -141,7 +141,7 @@ public class DetalleEventoActivity extends AppCompatActivity implements View.OnC
 					if(result == 200) {
 						Evento e = api.getEventoPos(bundle.getInt("idEvento"));
 						e.setInscrit(true);
-						btnQR.setText("Accedir mitjançant QR");
+						btnQR.setText(R.string.accedirQR);
 						if (mNfcAdapter != null) btnNFC.setVisibility(View.VISIBLE);
 						lyOK.setVisibility(View.VISIBLE);
 						if(idUsuari<0)actualitzar_id(POST.response);

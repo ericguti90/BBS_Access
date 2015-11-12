@@ -106,7 +106,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Esdeveniments"
+            android:text="@string/esdeveniments"
             android:id="@+id/textList"
             android:textColor="#008ba9"
             android:background="#F6FBFC"
@@ -166,7 +166,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Avís"
+                android:text="@string/avis"
                 android:id="@+id/textView32"
                 android:textColor="#934501" />
 
@@ -174,7 +174,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Encara no hi ha cap esdeveniment disponible"
+                android:text="@string/EsdNoDisp"
                 android:id="@+id/textView31"
                 android:textColor="#934501" />
         </LinearLayout>

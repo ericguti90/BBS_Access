@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import es.cat.cofb.bbsaccess.API.POST;
 import es.cat.cofb.bbsaccess.Model.Pregunta;
 import es.cat.cofb.bbsaccess.Presentation.DetallePreguntaActivity;
+import es.cat.cofb.bbsaccess.R;
 
 
 /**
@@ -105,6 +106,6 @@ public class DadesVotacio extends AsyncTask<String, Integer, Boolean> {
 
     @Override
     protected void onCancelled() {
-        Toast.makeText(DPActivity, "Error: no s'han enviat les respostes!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(DPActivity, R.string.errorEnviarRespostes, Toast.LENGTH_SHORT).show();
     }
 }
