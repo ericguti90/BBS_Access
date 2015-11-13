@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import es.cat.cofb.bbsaccess.Presentation.AvisoLegalActivity;
 import es.cat.cofb.bbsaccess.Presentation.ContacteActivity;
+import es.cat.cofb.bbsaccess.Presentation.IdiomaActivity;
 import es.cat.cofb.bbsaccess.Presentation.MainActivity;
 import es.cat.cofb.bbsaccess.Presentation.PerfilActivity;
 import es.cat.cofb.bbsaccess.R;
@@ -57,7 +58,9 @@ public class MenuListener implements NavigationView.OnNavigationItemSelectedList
                 applicationContext.startActivity(intentC);
                 break;
             case R.id.idioma:
-                Toast.makeText(applicationContext,"proximament", Toast.LENGTH_SHORT).show();
+                Intent intentI = new Intent(applicationContext, IdiomaActivity.class);
+                intentI.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                applicationContext.startActivity(intentI);
                 break;
             case R.id.perfil:
                 Intent intentP = new Intent(applicationContext, PerfilActivity.class);

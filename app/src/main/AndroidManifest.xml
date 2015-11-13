@@ -74,9 +74,12 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".Presentation.PerfilActivity"
+        <activity
+            android:name=".Presentation.PerfilActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity android:name=".Presentation.IdiomaActivity" >
         </activity>
     </application>
 

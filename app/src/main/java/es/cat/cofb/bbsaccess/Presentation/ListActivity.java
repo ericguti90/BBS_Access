@@ -138,10 +138,14 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         mLinearLayout = new LinearLayoutManager(this);
         //Asignamos el LinearLayoutManager al recycler:
         eventos.setLayoutManager(mLinearLayout);
-
-        Bundle bundle=getIntent().getExtras();
-        user = bundle.getInt("idUsuari");
-        userNom = bundle.getString("usuari");
+        try {
+            Bundle bundle = getIntent().getExtras();
+            user = bundle.getInt("idUsuari");
+            userNom = bundle.getString("usuari");
+        }catch(Exception e){
+            user = api.getIdUser();
+            userNom = api.getUser();
+        }
         TextView txt = (TextView) findViewById(R.id.headerUser);
         txt.setText(userNom);
         try {
@@ -361,6 +365,8 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 //Evento evento = new Evento(1, "titol1", "23-25-2015", "Col·legi", true, true);
                 //Evento evento1 = new Evento(1, "titulillo", "212-05-2015", "COFB", true, true);
                 //lstEvento.add(evento); lstEvento.add(evento1);
+                api.setIdUser(user);
+                api.setUser(userNom);
                 if(esEvento && esHistorico) {
                     if(api.getHistorico().size() == 0) eventos.setVisibility(View.GONE);
                     else {

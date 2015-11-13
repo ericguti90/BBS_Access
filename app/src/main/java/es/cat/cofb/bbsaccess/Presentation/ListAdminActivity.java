@@ -48,8 +48,12 @@ public class ListAdminActivity extends AppCompatActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_admin);
-        Bundle bundle=getIntent().getExtras();
-        userNom = bundle.getString("usuari");
+        try {
+            Bundle bundle = getIntent().getExtras();
+            userNom = bundle.getString("usuari");
+        }catch(Exception e){
+            userNom = api.getUser();
+        }
         api = new Resultado();
         eventos = (RecyclerView) findViewById(R.id.LstListadoAdmin);
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);

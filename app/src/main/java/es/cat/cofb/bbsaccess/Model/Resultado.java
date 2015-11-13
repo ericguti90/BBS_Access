@@ -10,7 +10,8 @@ public class Resultado {
     private ArrayList<Evento> eventos;
     private ArrayList<Votacion> votaciones;
     private ArrayList<Evento> historico;
-    private String user = null;
+    private static String user = null;
+    private static int idUser;
 
     public Resultado() {
         this.eventos = new ArrayList<Evento>();
@@ -143,7 +144,7 @@ public class Resultado {
         return false;
     }
 
-    public String getUser() {
+    public static String getUser() {
         return user;
     }
 
@@ -159,5 +160,13 @@ public class Resultado {
             }
         }
         return result;
+    }
+
+    public static int getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
     }
 }

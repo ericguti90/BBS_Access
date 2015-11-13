@@ -79,4 +79,6 @@
     <string name="canviarIdioma">Canviar idioma</string>
     <string name="tancarSessio">Tancar sessió</string>
     <string name="versio">BBS Accés v1.0</string>
+    <string name="Catala" translatable="false">Català</string>
+    <string name="Castellano" translatable="false">Castellano</string>
 </resources>

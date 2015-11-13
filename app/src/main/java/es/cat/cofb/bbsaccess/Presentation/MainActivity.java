@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Locale;
+
 import es.cat.cofb.bbsaccess.AsynTask.Login;
 import es.cat.cofb.bbsaccess.R;
 
@@ -25,17 +27,59 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditText user, pass;
     CheckBox checkBox;
     boolean save = false;
+    Button btnSesion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        Button btnSesion = (Button) findViewById(R.id.button);
+        btnSesion = (Button) findViewById(R.id.button);
         user = (EditText) findViewById(R.id.editText);
         pass = (EditText) findViewById(R.id.editText2);
         checkBox = (CheckBox) findViewById(R.id.checkBox);
         btnSesion.setOnClickListener(this);
+        loadLocale();
         checkUser();
+    }
+
+    private void loadLocale() {
+        String langPref = "Language";
+        SharedPreferences prefs = getSharedPreferences("CommonPrefs", Activity.MODE_PRIVATE);
+        String language = prefs.getString(langPref, "");
+        changeLang(language);
+    }
+
+    private void changeLang(String lang) {
+        if (lang.equalsIgnoreCase("")) return;
+        Locale myLocale = new Locale(lang);
+        saveLocale(lang);
+        Locale.setDefault(myLocale);
+        android.content.res.Configuration config = new android.content.res.Configuration();
+        config.locale = myLocale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        updateTexts();
+    }
+
+    void updateTexts(){
+        TextView benvinguts = (TextView) findViewById(R.id.textView4);
+        TextView iniSessio = (TextView) findViewById(R.id.textView);
+        TextView usuari = (TextView) findViewById(R.id.textView2);
+        TextView pswd = (TextView) findViewById(R.id.textView3);
+        benvinguts.setText(R.string.benvinguts);
+        iniSessio.setText(R.string.iniciarSessio);
+        usuari.setText(R.string.usuari);
+        pswd.setText(R.string.contrasenya);
+        checkBox.setText(R.string.recordarContrasenya);
+        btnSesion.setText(R.string.iniciarSessio);
+
+    }
+
+    private void saveLocale(String lang) {
+        String langPref = "Language";
+        SharedPreferences prefs = getSharedPreferences("CommonPrefs", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(langPref, lang);
+        editor.apply();
     }
 
     @Override
