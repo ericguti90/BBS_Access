@@ -34,6 +34,8 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.AdapterVie
     public void onBindViewHolder(AdapterViewHolderEvento holder, int position) {
         holder.titol.setText(evento.get(position).getTitol());
         holder.data.setText(evento.get(position).getDataHora()+"");
+        if(evento.get(position).isInscrit()) holder.status.setBackgroundResource(R.color.item);
+        else holder.status.setBackgroundResource(R.color.color_accent);
     }
 
     @Override
@@ -45,11 +47,13 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.AdapterVie
     public class AdapterViewHolderEvento extends RecyclerView.ViewHolder {
         public TextView titol;
         public TextView data;
+        public TextView status;
 
         public AdapterViewHolderEvento(View itemView) {
             super(itemView);
             this.titol = (TextView) itemView.findViewById(R.id.textTitol);
             this.data = (TextView) itemView.findViewById(R.id.textData);
+            this.status = (TextView) itemView.findViewById(R.id.status);
         }
     }
 }
